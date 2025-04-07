@@ -1,4 +1,4 @@
-// src/App.jsx
+// /App.jsx
 import React, { useState } from 'react';
 import ListaTransferencias from './src/components/ListaTransferencias';
 import { MyRoutes } from './src/routers/routes';
@@ -30,12 +30,11 @@ const [sidebarOpen, setSidebarOpen]=useState(true);
   );
 }
 const Container = styled.div`
- 
   display: grid;
   grid-template-columns: 90px auto;
-  background:${({theme})=>theme.bgtotal};
-  transition:all 0.3s;
-  &.active{
+  background: ${({ theme }) => theme.bgtotal};
+  transition:all 0.3s ;
+  &.active {
     grid-template-columns: 300px auto;
   }
   color:${({theme})=>theme.text};
