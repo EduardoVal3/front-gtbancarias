@@ -1,6 +1,5 @@
-// /App.jsx
+// App.jsx
 import React, { useState } from 'react';
-import ListaTransferencias from './src/components/ListaTransferencias';
 import { MyRoutes } from './src/routers/routes';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';

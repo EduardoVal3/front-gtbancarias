@@ -139,6 +139,7 @@ const linksArray = [
 
 //#region STYLED COMPONENTS
 const Container = styled.div`
+  height:100vh;
   color: ${(props) => props.theme.text};
   background: ${(props) => props.theme.bg};
   position: sticky;
