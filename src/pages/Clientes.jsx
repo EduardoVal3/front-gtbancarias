@@ -7,6 +7,7 @@ import { DeleteClient } from "../components/DeleteClient";
 import { PostClient } from "../components/PostClient";
 import { PutClient } from "../components/PutClient";
 
+// este es el Navbar que renderiza cada componente DataGrid
 export function Clientes() {
     const [location] = useLocation(); // 👈 Obtiene la ruta actual
 
@@ -46,6 +47,8 @@ export function Clientes() {
 
 // Estilos
 const Container = styled.div`
+    height: 100vh;
+    background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
 `;
