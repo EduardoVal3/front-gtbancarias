@@ -70,7 +70,7 @@ const PostClient = () => {
           <RequiredRule message="El apellido es obligatorio" />
         </SimpleItem>
 
-        <SimpleItem dataField="email" label={{ text: "Correo electrónico" }}>
+        <SimpleItem dataField="email" label={{ text: "Correo" }}>
           <RequiredRule message="El correo es obligatorio" />
           <EmailRule message="Correo electrónico no válido" />
         </SimpleItem>
