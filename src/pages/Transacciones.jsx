@@ -3,9 +3,9 @@ import { v } from "../styles/Variables";
 import GetClientes from "../components/GetClientes";
 import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { Link, Route } from "wouter";
-import { DeleteClient } from "../components/DeleteClient";
-import { PostClient } from "../components/PostClient";
-import { PutClient } from "../components/PutClient";
+import DeleteClient from "../components/DeleteClient";
+import PostClient from "../components/PostClient";
+import PutClient from "../components/PutClient";
 
 export function Transacciones() {
     return (
@@ -44,6 +44,7 @@ export function Transacciones() {
 
 // Estilos
 const Container = styled.div`
+    height: 100vh;
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
 `;

@@ -1,4 +1,4 @@
-// components/GetClientes.jsx
+// components/ClienteComponents/GetClientes.jsx
 import React, { useEffect, useState } from 'react';
 import {
   DataGrid,
@@ -38,7 +38,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-rowsview .dx-row {
     background-color: ${({ theme }) => theme.bgtgderecha};
     transition: none !important;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.gray500}; // texto cambia
   }
 
   .dx-datagrid-rowsview .dx-row:hover {
@@ -101,7 +101,7 @@ const GetClientes = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
-        rowAlternationEnabled={true}
+        //rowAlternationEnabled={true} //No quiero esto
         wordWrapEnabled={true}
         height="auto"
       >

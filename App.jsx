@@ -12,7 +12,7 @@ function App() {
   const [theme, setTheme]= useState("light");
   const themeStyle=theme==="light"?Light:Dark;
 
-const [sidebarOpen, setSidebarOpen]=useState(true);
+const [sidebarOpen, setSidebarOpen]=useState(false);
   return (
     <>
     <ThemeContext.Provider value={{setTheme,theme}}>
