@@ -113,7 +113,7 @@ const PostClient = () => {
           });
         } catch (error) {
           console.error("❌ Error al crear cliente:", error);
-          notify("Error al registrar cliente", "error", 3000);
+          notify("Error al registrar cliente", "error", 4000);
         }
       } else {
         console.warn("Formulario inválido.");
