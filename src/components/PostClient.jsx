@@ -8,19 +8,15 @@ import {
 } from "devextreme-react/form";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
+import { v } from "../styles/Variables";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.bgtotal};
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 100%; /* Adapta al 100% en móviles */
-  margin: 0 auto;
-  overflow-x: hidden;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem; /* Menos padding en móviles */
-  }
+    color: ${({ theme }) => theme.text};
+    border-radius: ${v.borderRadius};
+    padding: ${v.lgSpacing};
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
 `;
 
 const Title = styled.h2`
