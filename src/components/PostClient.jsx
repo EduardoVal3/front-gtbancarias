@@ -45,6 +45,11 @@ const ResponsiveForm = styled(Form)`
     }
   }
 
+  .dx-field-item-label-text {
+    color: ${(props) => props.theme.text}; /* Aquí aplicamos el color del tema */
+    font-weight: 500;
+  }
+
   .dx-validation-summary {
     margin-top: 1rem;
     color: ${({ theme }) => theme.red500};
@@ -69,7 +74,7 @@ const StyledButton = styled(Button)`
     color: ${({ theme }) => theme.white};
     font-size: ${({ theme }) => theme.fontButton};
     border-radius: 6px;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 

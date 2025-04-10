@@ -10,7 +10,7 @@ import PutClient from "../components/PutClient";
 export function Prestamos() {
     return (
         <Container>
-            <Title>Gestiona los clientes</Title>
+            <Title>Gestiona los Préstamos</Title>
 
             <Navbar>
                 <StyledLink href="/getclientes">
@@ -23,7 +23,7 @@ export function Prestamos() {
                 </StyledLink>
                 <StyledLink href="/putcliente">
                     <FaUserEdit />
-                    <span>Actualizar</span>
+                    <span>Editar</span>
                 </StyledLink>
                 <StyledLink href="/deletecliente">
                     <FaUserTimes />
@@ -50,12 +50,17 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-    font-size: ${({ theme }) => theme.fontxl};
-    margin-bottom: ${v.lgSpacing};
+  color: ${({ theme }) => theme.textprimary};
+  margin-bottom: 1.5rem;
+  font-size: ${({ theme }) => theme.fontxl};
+  text-align: center;
+  line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
 const Navbar = styled.nav`
     display: flex;
+    justify-content: center;
+    margin-top: auto;
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};

@@ -28,8 +28,11 @@ const GridWrapper = styled.div`
     font-size: ${({ theme }) => theme.fontsm};
     background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
+    
   }
-
+  .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
+    background-color: ${(props) => props.theme.bg2};
+  }
   .dx-datagrid-headers {
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ theme }) => theme.text};
@@ -38,7 +41,6 @@ const GridWrapper = styled.div`
   .dx-datagrid-rowsview .dx-row {
     background-color: ${({ theme }) => theme.bgtgderecha};
     transition: none !important;
-    color: ${({ theme }) => theme.gray500}; // texto cambia
   }
 
   .dx-datagrid-rowsview .dx-row:hover {
@@ -101,7 +103,7 @@ const GetClientes = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
-        //rowAlternationEnabled={true} //No quiero esto
+        rowAlternationEnabled={true} //No quiero esto
         wordWrapEnabled={true}
         height="auto"
       >

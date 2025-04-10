@@ -63,6 +63,8 @@ const Title = styled.h1`
 
 const Navbar = styled.nav`
     display: flex;
+    justify-content: center;
+    margin-top: auto;
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};

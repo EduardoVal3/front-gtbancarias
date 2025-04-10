@@ -26,7 +26,7 @@ export function CuentasBancarias() {
                 </StyledLink>
                 <StyledLink href="/putcliente" $active={location === "/putcliente"}>
                     <FaUserEdit />
-                    <span>Actualizar</span>
+                    <span>Editar</span>
                 </StyledLink>
                 <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
                     <FaUserTimes />
@@ -54,12 +54,17 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-    font-size: ${({ theme }) => theme.fontxl};
-    margin-bottom: ${v.lgSpacing};
+  color: ${({ theme }) => theme.textprimary};
+  margin-bottom: 1.5rem;
+  font-size: ${({ theme }) => theme.fontxl};
+  text-align: center;
+  line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
 const Navbar = styled.nav`
     display: flex;
+    justify-content: center;
+    margin-top: auto;
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
