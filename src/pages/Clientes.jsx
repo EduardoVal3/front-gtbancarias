@@ -52,11 +52,14 @@ const Container = styled.div`
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
 `;
-
 const Title = styled.h1`
-    font-size: ${({ theme }) => theme.fontxl};
-    margin-bottom: ${v.lgSpacing};
+  color: ${({ theme }) => theme.textprimary};
+  margin-bottom: 1.5rem;
+  font-size: ${({ theme }) => theme.fontxl};
+  text-align: center;
+  line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
+
 
 const Navbar = styled.nav`
     display: flex;

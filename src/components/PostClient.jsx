@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import {
   Form,
   SimpleItem,
@@ -9,15 +9,17 @@ import {
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
 import { v } from "../styles/Variables";
+import { createCliente } from "../services/clienteService";
+import notify from "devextreme/ui/notify";
 
 const Container = styled.div`
-    height: auto;
-    background-color: ${({ theme }) => theme.bgtotal};
-    color: ${({ theme }) => theme.text};
-    border-radius: ${v.borderRadius};
-    padding: ${v.lgSpacing};
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow-x: auto;
+  height: auto;
+  background-color: ${({ theme }) => theme.bgtotal};
+  color: ${({ theme }) => theme.text};
+  border-radius: ${v.borderRadius};
+  padding: ${v.lgSpacing};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
 `;
 
 const Title = styled.h2`
@@ -25,78 +27,108 @@ const Title = styled.h2`
   margin-bottom: 1.5rem;
   font-size: ${({ theme }) => theme.fontxl};
   text-align: center;
-  line-height: 1.2; /* Mejora legibilidad en móviles */
+  line-height: 1;
 `;
 
 const ResponsiveForm = styled(Form)`
   .dx-form-item-content {
-    margin-bottom: 1rem; /* Espaciado entre campos */
+    margin-bottom: 1rem;
   }
 
   .dx-texteditor-input {
-    padding: 0.75rem; /* Más espacio en los inputs */
-    
+    padding: 0.40rem;
     border: 1px solid ${({ theme }) => theme.gray500};
     transition: border-color 0.3s ease;
 
     &:focus {
-      border-color: ${({ theme }) => theme.primary}; /* Efecto al enfocar */
+      border-color: ${({ theme }) => theme.primary};
     }
   }
 
   .dx-validation-summary {
     margin-top: 1rem;
-    color: ${({ theme }) => theme.red500}; /* Color de errores */
+    color: ${({ theme }) => theme.red500};
   }
 
   @media (max-width: 768px) {
     .dx-form-item-label {
-      font-size: ${({ theme }) => theme.fontsm}; /* Tamaño de texto reducido */
+      font-size: ${({ theme }) => theme.fontsm};
     }
   }
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
 `;
 
 const StyledButton = styled(Button)`
   && {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     background-color: ${({ theme }) => theme.bg4};
     color: ${({ theme }) => theme.white};
     font-size: ${({ theme }) => theme.fontButton};
     border-radius: 6px;
-    padding: 12px 24px; /* Más espacio en el botón */
+    padding: 10px 20px;
     border: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-      transform: translateY(-2px); /* Efecto de elevación */
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Sombra suave */
-      background-color: ${({ theme }) => theme.primary}; /* Gradiente suave */
+      transform: translateY(-4px);
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+      background-color: ${({ theme }) => theme.primary};
     }
 
     &:active {
-      transform: translateY(0); /* Regresa al estado normal */
+      transform: translateY(0);
     }
   }
 `;
 
 const PostClient = () => {
   const theme = useContext(ThemeContext);
+  const formRef = useRef(null);
 
-  const handleSubmit = (e) => {
-    const formData = e.component.option("formData");
-    console.log("Datos del formulario:", formData);
-    // Aquí llamas a tu servicio Axios para hacer el POST
+  const handleButtonClick = async () => {
+    const formInstance = formRef.current?.instance;
+
+    if (formInstance) {
+      const result = formInstance.validate();
+
+      if (result.isValid) {
+        const formData = formInstance.option("formData");
+
+        try {
+          await createCliente(formData);
+          console.log("✅ Cliente creado:", formData);
+          notify("Cliente registrado exitosamente", "success", 4000);
+
+          // Reiniciar formulario
+          formInstance.option("formData", {
+            nombre: "",
+            apellido: "",
+            email: "",
+            telefono: "",
+            direccion: "",
+          });
+        } catch (error) {
+          console.error("❌ Error al crear cliente:", error);
+          notify("Error al registrar cliente", "error", 3000);
+        }
+      } else {
+        console.warn("Formulario inválido.");
+      }
+    }
   };
 
   return (
     <Container theme={theme}>
       <Title theme={theme}>Registrar nuevo cliente</Title>
       <ResponsiveForm
-        colCount={window.innerWidth > 768 ? 2 : 1} // Columnas responsivas
+        ref={formRef}
+        colCount={window.innerWidth > 768 ? 2 : 1}
         showColonAfterLabel={true}
         showValidationSummary={true}
-        onContentReady={(e) => e.component.validate()}
-        onSubmit={handleSubmit}
         formData={{
           nombre: "",
           apellido: "",
@@ -126,21 +158,19 @@ const PostClient = () => {
           />
         </SimpleItem>
 
-        <SimpleItem
-          dataField="direccion"
-          label={{ text: "Dirección" }}
-          colSpan={2}
-        >
+        <SimpleItem dataField="direccion" label={{ text: "Dirección" }} colSpan={2}>
           <RequiredRule message="La dirección es obligatoria" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>
+          <ButtonWrapper>
           <StyledButton
             theme={theme}
             text="Registrar"
             type="success"
-            useSubmitBehavior={true}
+            onClick={handleButtonClick}
           />
+          </ButtonWrapper>
         </SimpleItem>
       </ResponsiveForm>
     </Container>
@@ -148,4 +178,6 @@ const PostClient = () => {
 };
 
 export default PostClient;
+
+
 
