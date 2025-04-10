@@ -24,8 +24,4 @@ export default api;
 // ...
 
 
-export const getTransferencias = async () => {
-  const response = await api.get('/transferencia');
-  return response.data;
-};
 // más funciones (PUT, DELETE)

@@ -106,7 +106,7 @@ const linksArray = [
       to: "/cuentas",
     },
     {
-      label: "Tarjetas",
+      label: "Tarjetas de Crédito",
       icon: <FaRegCreditCard />,
       to: "tarjetas",
     },

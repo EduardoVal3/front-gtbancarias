@@ -11,7 +11,8 @@ import { Button } from "devextreme-react/button";
 import { v } from "../styles/Variables";
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.bgtotal};
+    height: auto;
+    background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
     border-radius: ${v.borderRadius};
     padding: ${v.lgSpacing};

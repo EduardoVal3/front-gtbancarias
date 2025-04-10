@@ -26,7 +26,7 @@ export function Clientes() {
                 </StyledLink>
                 <StyledLink href="/putcliente" $active={location === "/putcliente"}>
                     <FaUserEdit />
-                    <span>Actualizar</span>
+                    <span>Editar</span>
                 </StyledLink>
                 <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
                     <FaUserTimes />

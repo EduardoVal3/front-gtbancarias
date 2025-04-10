@@ -1,42 +1,46 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
-import { Link, Route } from "wouter";
+import { FaUserTie } from "react-icons/fa";
+import { Link, Route, useLocation } from "wouter";
 import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
-import DeleteClient from "../components/DeleteClient";
+import GetEmpleados from "../components/EmpleadoComponents/GetEmpleado";
+import PutEmpleados from "../components/EmpleadoComponents/PutEmpleado";
+import DeleteEmpleado from "../components/EmpleadoComponents/DeleteEmpleado";
+import { MdAddReaction, MdDelete, MdEdit } from "react-icons/md";
 
+// este es el Navbar que renderiza cada componente DataGrid
 export function Empleados() {
+    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+
     return (
         <Container>
-            <Title>Gestiona los clientes</Title>
+            <Title>Gestiona los Empleados</Title>
 
             <Navbar>
-                <StyledLink href="/getclientes">
-                    <FaUser />
+                <StyledLink href="/getclientes" $active={location === "/getclientes"}>
+                    <FaUserTie />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/postcliente">
-                    <FaUserPlus />
+                <StyledLink href="/postcliente" $active={location === "/postcliente"}>
+                    <MdAddReaction />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/putcliente">
-                    <FaUserEdit />
+                <StyledLink href="/putcliente" $active={location === "/putcliente"}>
+                    <MdEdit />
                     <span>Actualizar</span>
                 </StyledLink>
-                <StyledLink href="/deletecliente">
-                    <FaUserTimes />
+                <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
+                    <MdDelete />
                     <span>Eliminar</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/getclientes" component={GetClientes} />
+                <Route path="/getclientes" component={GetEmpleados} />
                 <Route path="/postcliente" component={PostClient} />
-                <Route path="/putcliente" component={PutClient} />
-                <Route path="/deletecliente" component={DeleteClient} />
+                <Route path="/putcliente" component={PutEmpleados} />
+                <Route path="/deletecliente" component={DeleteEmpleado} />
             </div>
         </Container>
     );
@@ -45,6 +49,7 @@ export function Empleados() {
 // Estilos
 const Container = styled.div`
     height: 100vh;
+    background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
 `;
@@ -70,8 +75,8 @@ const StyledLink = styled(Link)`
     align-items: center;
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
-    color: ${({ theme }) => theme.text};
-    background: ${({ theme }) => theme.bg3};
+    color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;
@@ -90,9 +95,11 @@ const StyledLink = styled(Link)`
     svg {
         font-size: 1.1rem;
         transition: color 0.3s ease;
+        color: ${({ $active }) => $active ? "#fff" : "inherit"};
     }
 
     span {
         font-size: ${({ theme }) => theme.fontsm};
     }
 `;
+

@@ -1,31 +1,37 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
 import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
-import { Link, Route } from "wouter";
-import DeleteClient from "../components/DeleteClient";
+import { Link, Route, useLocation } from "wouter";
 import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
+import GetTarjetasCredito from "../components/TarjetasComponents/Get";
+import PutTarjetaCredito from "../components/TarjetasComponents/Put";
+import DeleteTarjetaCredito from "../components/TarjetasComponents/Delete";
+import GetTransferencias from "../components/TransferenciasComponents/Get";
+import PutTransferencia from "../components/TransferenciasComponents/Put";
+import DeleteTransferencia from "../components/TransferenciasComponents/Delete";
 
+// este es el Navbar que renderiza cada componente DataGrid
 export function Transacciones() {
+    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+
     return (
         <Container>
-            <Title>Gestiona los clientes</Title>
+            <Title>Gestiona las Transferencias</Title>
 
             <Navbar>
-                <StyledLink href="/getclientes">
+                <StyledLink href="/getclientes" $active={location === "/getclientes"}>
                     <FaUser />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/postcliente">
+                <StyledLink href="/postcliente" $active={location === "/postcliente"}>
                     <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/putcliente">
+                <StyledLink href="/putcliente" $active={location === "/putcliente"}>
                     <FaUserEdit />
                     <span>Actualizar</span>
                 </StyledLink>
-                <StyledLink href="/deletecliente">
+                <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
                     <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
@@ -33,10 +39,10 @@ export function Transacciones() {
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/getclientes" component={GetClientes} />
+                <Route path="/getclientes" component={GetTransferencias} />
                 <Route path="/postcliente" component={PostClient} />
-                <Route path="/putcliente" component={PutClient} />
-                <Route path="/deletecliente" component={DeleteClient} />
+                <Route path="/putcliente" component={PutTransferencia} />
+                <Route path="/deletecliente" component={DeleteTransferencia} />
             </div>
         </Container>
     );
@@ -45,6 +51,7 @@ export function Transacciones() {
 // Estilos
 const Container = styled.div`
     height: 100vh;
+    background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
 `;
@@ -70,8 +77,8 @@ const StyledLink = styled(Link)`
     align-items: center;
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
-    color: ${({ theme }) => theme.text};
-    background: ${({ theme }) => theme.bg3};
+    color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;
@@ -90,6 +97,7 @@ const StyledLink = styled(Link)`
     svg {
         font-size: 1.1rem;
         transition: color 0.3s ease;
+        color: ${({ $active }) => $active ? "#fff" : "inherit"};
     }
 
     span {
