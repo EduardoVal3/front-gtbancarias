@@ -9,6 +9,7 @@ import DeleteTarjetaCredito from "../components/TarjetasComponents/Delete";
 import GetTransferencias from "../components/TransferenciasComponents/Get";
 import PutTransferencia from "../components/TransferenciasComponents/Put";
 import DeleteTransferencia from "../components/TransferenciasComponents/Delete";
+import PostTransferencia from "../components/TransferenciasComponents/Post";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Transacciones() {
@@ -40,7 +41,7 @@ export function Transacciones() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/getclientes" component={GetTransferencias} />
-                <Route path="/postcliente" component={PostClient} />
+                <Route path="/postcliente" component={PostTransferencia} />
                 <Route path="/putcliente" component={PutTransferencia} />
                 <Route path="/deletecliente" component={DeleteTransferencia} />
             </div>

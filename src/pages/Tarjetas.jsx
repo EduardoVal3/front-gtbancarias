@@ -6,6 +6,7 @@ import PostClient from "../components/PostClient";
 import GetTarjetasCredito from "../components/TarjetasComponents/Get";
 import PutTarjetaCredito from "../components/TarjetasComponents/Put";
 import DeleteTarjetaCredito from "../components/TarjetasComponents/Delete";
+import PostTarjetaCredito from "../components/TarjetasComponents/Post";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Tarjetas() {
@@ -37,7 +38,7 @@ export function Tarjetas() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/getclientes" component={GetTarjetasCredito} />
-                <Route path="/postcliente" component={PostClient} />
+                <Route path="/postcliente" component={PostTarjetaCredito} />
                 <Route path="/putcliente" component={PutTarjetaCredito} />
                 <Route path="/deletecliente" component={DeleteTarjetaCredito} />
             </div>
