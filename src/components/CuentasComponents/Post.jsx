@@ -182,7 +182,7 @@ const PostCuenta = () => {
           editorOptions={{
             items: clientes,
             valueExpr: "Id",
-            displayExpr: (item) => item ? `${item.Id} - ${item.Nombre} ${item.Apellido}` : "",
+            displayExpr: (item) => item ? `${item.Id} - ${item.Nombre} - ${item.Apellido}` : "",
             placeholder: "Seleccione el ID del cliente",
             searchEnabled: true,
           }}

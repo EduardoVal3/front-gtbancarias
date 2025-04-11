@@ -1,5 +1,5 @@
 import { BrowserRouter,Routes,Route } from "react-router-dom"
-import { Home } from "../pages/Home"
+import Home from "../pages/Home"
 import { Clientes } from "../pages/Clientes"
 import { Empleados } from "../pages/Empleados"
 import { CuentasBancarias } from "../pages/CuentasBancarias"

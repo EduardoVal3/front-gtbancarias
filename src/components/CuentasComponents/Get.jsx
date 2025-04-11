@@ -119,6 +119,7 @@ const GetCuentas = () => {
         <Column dataField="NumeroCuenta" caption="Cuenta" />
         <Column dataField="Tipo" caption="Tipo" />
         <Column dataField="TipoString" caption="TipoString" />
+        <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente ID" />
       </DataGrid>
     </GridWrapper>

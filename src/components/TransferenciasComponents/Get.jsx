@@ -119,6 +119,7 @@ const GetTransferencias = () => {
         <Column dataField="Monto" caption="Monto" />
         <Column dataField="CuentaOrigen.NumeroCuenta" caption="Cuenta Origen" />
         <Column dataField="CuentaDestino.NumeroCuenta" caption="Cuenta Destino" />
+        <Column dataField="HechoPor" caption="Hecho Por" />
         <Column dataField="Descripcion" caption="Descripción" />
         <Column dataField="Fecha" caption="Fecha" />
 
