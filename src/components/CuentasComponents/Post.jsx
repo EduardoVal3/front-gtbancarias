@@ -1,18 +1,17 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Form,
   SimpleItem,
   RequiredRule,
   PatternRule
 } from "devextreme-react/form";
-import NumberBox from "devextreme-react/number-box";
-import SelectBox from "devextreme-react/select-box";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
 import { v } from "../../styles/Variables";
 
 import notify from "devextreme/ui/notify";
 import { createCuentaBancaria } from "../../services/cuentaBancariaService";
+import { getClientes } from "../../services/clienteService";
 
 const Container = styled.div`
   height: auto;
@@ -99,6 +98,21 @@ const tipoCuentaOptions = ["Ahorro", "Corriente", "Empresarial"];
 const PostCuenta = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
+  const [clientes, setClientes] = useState([]);
+
+  useEffect(() => {
+    const cargarClientes = async () => {
+      try {
+        const data = await getClientes();
+        setClientes(data);
+      } catch (error) {
+        console.error("Error al cargar clientes:", error);
+        notify("Error al cargar la lista de clientes", "error", 4000);
+      }
+    };
+
+    cargarClientes();
+  }, []);
 
   const handleButtonClick = async () => {
     const formInstance = formRef.current?.instance;
@@ -161,12 +175,19 @@ const PostCuenta = () => {
           <RequiredRule message="Debe seleccionar el tipo de cuenta" />
         </SimpleItem>
 
-        <SimpleItem dataField="clienteId" label={{ text: "ID del Cliente" }}>
-          <RequiredRule message="El ID del cliente es obligatorio" />
-          <PatternRule
-            pattern={/^[0-9]+$/}
-            message="Solo se permiten números"
-          />
+        <SimpleItem
+          dataField="clienteId"
+          label={{ text: "ClienteID" }}
+          editorType="dxSelectBox"
+          editorOptions={{
+            items: clientes,
+            valueExpr: "Id",
+            displayExpr: (item) => item ? `${item.Id} ` : "",
+            placeholder: "Seleccione el ID del cliente",
+            searchEnabled: true,
+          }}
+        >
+          <RequiredRule message="Debe seleccionar un cliente" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>

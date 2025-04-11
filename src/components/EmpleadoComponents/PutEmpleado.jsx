@@ -129,10 +129,12 @@ const PutEmpleados = () => {
           useIcons={true}
         />
 
-        <Column dataField="Id" caption="ID" width={70} allowEditing={false} />
+        <Column dataField="Id" caption="ID" width={50} allowEditing={false} />
         <Column dataField="Nombre" caption="Nombre" />
         <Column dataField="Apellido" caption="Apellido" />
         <Column dataField="Email" caption="Email" />
+        <Column dataField="Tipo" caption="Tipo" />
+        <Column dataField="TipoString" caption="TipoString" />
         <Column dataField="Telefono" caption="Teléfono" />
         <Column dataField="Direccion" caption="Dirección" />
         

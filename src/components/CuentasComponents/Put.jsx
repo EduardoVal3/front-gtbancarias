@@ -13,6 +13,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getCuentasBancarias, updateCuentaBancaria } from '../../services/cuentaBancariaService';
+import notify from 'devextreme/ui/notify';
 
 
 const GridWrapper = styled.div`
@@ -96,6 +97,7 @@ const PutCuentas = () => {
 
     try {
       await updateCuentaBancaria(id, updatedCliente);
+      notify("Cuenta actualizada exitosamente", "success", 4000);
     } catch (err) {
       console.error('Error actualizando cliente:', err);
     }
@@ -129,7 +131,7 @@ const PutCuentas = () => {
           useIcons={true}
         />
 
-        <Column dataField="Id" caption="ID" width={70} />
+        <Column dataField="Id" caption="ID" width={50} />
         <Column dataField="Saldo" caption="Saldo" />
         <Column dataField="NumeroCuenta" caption="Cuenta" />
         <Column dataField="Tipo" caption="Tipo" />

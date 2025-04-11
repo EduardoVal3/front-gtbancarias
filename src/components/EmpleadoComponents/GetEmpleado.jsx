@@ -117,6 +117,8 @@ const GetEmpleados = () => {
         <Column dataField="Nombre" caption="Nombre" />
         <Column dataField="Apellido" caption="Apellido" />
         <Column dataField="Email" caption="Email" />
+        <Column dataField="Tipo" caption="Tipo" />
+        <Column dataField="TipoString" caption="TipoString" />
         <Column dataField="Telefono" caption="Teléfono" />
         <Column dataField="Direccion" caption="Dirección" />
       </DataGrid>

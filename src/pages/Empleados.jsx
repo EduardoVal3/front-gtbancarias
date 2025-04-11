@@ -7,6 +7,7 @@ import GetEmpleados from "../components/EmpleadoComponents/GetEmpleado";
 import PutEmpleados from "../components/EmpleadoComponents/PutEmpleado";
 import DeleteEmpleado from "../components/EmpleadoComponents/DeleteEmpleado";
 import { MdAddReaction, MdDelete, MdEdit } from "react-icons/md";
+import PostEmpleado from "../components/EmpleadoComponents/PostEmpleado";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Empleados() {
@@ -38,7 +39,7 @@ export function Empleados() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/getclientes" component={GetEmpleados} />
-                <Route path="/postcliente" component={PostClient} />
+                <Route path="/postcliente" component={PostEmpleado} />
                 <Route path="/putcliente" component={PutEmpleados} />
                 <Route path="/deletecliente" component={DeleteEmpleado} />
             </div>
