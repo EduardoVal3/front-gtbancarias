@@ -34,9 +34,13 @@ const GridWrapper = styled.div`
   }
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select{
     padding: 0;
-    width: 60px;
-    min-width: 60px;
-    max-width: 60px;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+
+  }
+  .dx-toolbar .dx-toolbar-menu-container{
+    padding-inline-end: 0.28rem;
   }
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
