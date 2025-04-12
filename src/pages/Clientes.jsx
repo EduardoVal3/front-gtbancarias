@@ -53,7 +53,8 @@ const Container = styled.div`
     color: ${({ theme }) => theme.text};
     @media (max-width: 768px) {
         width: 209vh;
-
+        height: 100vh;
+        overflow-y: hidden;
     }
   }
 `;
