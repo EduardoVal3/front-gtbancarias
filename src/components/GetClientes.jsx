@@ -26,7 +26,7 @@ const GridWrapper = styled.div`
     padding: 0rem;
     padding-top: 0.26rem;
     .dx-toolbar .dx-toolbar-menu-container{
-      padding-inline-end: 0.28rem;
+      padding-inline-end: 0.35rem;
     }
     .dx-pager .dx-pages .dx-page-indexes{
       padding: 0.50rem;
