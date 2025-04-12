@@ -108,7 +108,7 @@ const GetTransferencias = () => {
         wordWrapEnabled={true}
         height="auto"
       >
-        <SearchPanel visible={true} width={240} placeholder="Buscar..." />
+        <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
         <Export enabled={true} allowExportSelectedData={true} />

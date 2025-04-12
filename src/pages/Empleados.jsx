@@ -54,7 +54,6 @@ const Container = styled.div`
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
-    overflow-y:hidden;
 `;
 
 const Title = styled.h1`

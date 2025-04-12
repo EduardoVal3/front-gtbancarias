@@ -25,10 +25,8 @@ const GridWrapper = styled.div`
 
   .dx-datagrid {
     border: none;
-    font-size: ${({ theme }) => theme.fontsm};
     background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
-    
   }
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -107,7 +105,7 @@ const GetClientes = () => {
         wordWrapEnabled={true}
         height="auto"
       >
-        <SearchPanel visible={true} width={240} placeholder="Buscar..." />
+        <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
         <Export enabled={true} allowExportSelectedData={true} />
