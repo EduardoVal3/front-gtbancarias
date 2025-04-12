@@ -8,9 +8,8 @@ import PutCuentas from "../components/CuentasComponents/Put";
 import DeleteCuenta from "../components/CuentasComponents/Delete";
 import PostCuenta from "../components/CuentasComponents/Post";
 
-// este es el Navbar que renderiza cada componente DataGrid
 export function CuentasBancarias() {
-    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+    const [location] = useLocation(); 
 
     return (
         <Container>

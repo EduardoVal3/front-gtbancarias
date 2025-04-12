@@ -29,14 +29,11 @@ const [sidebarOpen, setSidebarOpen]=useState(false);
   );
 }
 const Container = styled.div`
-  height:100vh;
-  display: grid;
-  grid-template-columns: 90px auto;
+  min-height: 100vh;
+  padding-left: ${({ className }) =>
+    className?.includes("active") ? "300px" : "90px"};
   background: ${({ theme }) => theme.bgtotal};
-  transition:all 0.3s ;
-  &.active {
-    grid-template-columns: 300px auto;
-  }
-  color:${({theme})=>theme.text};
+  color: ${({ theme }) => theme.text};
+  transition: padding-left 0.3s;
 `;
 export default App;

@@ -10,7 +10,7 @@ import PostTarjetaCredito from "../components/TarjetasComponents/Post";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Tarjetas() {
-    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+    const [location] = useLocation(); 
 
     return (
         <Container>
