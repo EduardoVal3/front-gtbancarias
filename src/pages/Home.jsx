@@ -81,7 +81,7 @@ const CardTitle = styled.h3`
 
 const CardDesc = styled.p`
   font-size: ${({ theme }) => theme.fontsm};
-  color: ${({ theme }) => theme.textsecondary};
+  color: ${({ theme }) => theme.text};
   text-align: center;
   margin-bottom: 0.5rem;
 `;
