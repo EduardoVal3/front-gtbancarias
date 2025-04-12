@@ -52,6 +52,7 @@ const Container = styled.div`
     background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
+    max-width: auto;
 `;
 
 const Title = styled.h1`

@@ -47,6 +47,7 @@ const Container = styled.div`
     height: auto;
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
+    max-width: auto;
 `;
 
 const Title = styled.h1`

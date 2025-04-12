@@ -28,7 +28,7 @@ const [sidebarOpen, setSidebarOpen]=useState(false);
   );
 }
 const Container = styled.div`
-  height:100vh;
+  height:auto;
   display: grid;
   grid-template-columns: 90px auto;
   background: ${({ theme }) => theme.bgtotal};
