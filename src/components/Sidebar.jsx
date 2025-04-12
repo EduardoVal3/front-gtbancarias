@@ -139,16 +139,11 @@ const linksArray = [
 
 //#region STYLED COMPONENTS
 const Container = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: ${({ isOpen }) => (isOpen ? "300px" : "90px")};
-  background: ${(props) => props.theme.bg};
+  height:100vh;
   color: ${(props) => props.theme.text};
+  background: ${(props) => props.theme.bg};
+  position: sticky;
   padding-top: 20px;
-  z-index: 100;
-  transition: width 0.3s;
   .Sidebarbutton {
     position: absolute;
     top: ${v.xxlSpacing};

@@ -51,11 +51,7 @@ const Container = styled.div`
     background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
-    @media (max-width: 768px) {
-        width: 209vh;
-        height: auto;
-        overflow-y: hidden;
-    }
+
   }
 `;
 const Title = styled.h1`

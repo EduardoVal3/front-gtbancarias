@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState } from 'react';
 import { MyRoutes } from './src/routers/routes';
 import styled, { ThemeProvider } from 'styled-components';
@@ -29,11 +28,14 @@ const [sidebarOpen, setSidebarOpen]=useState(false);
   );
 }
 const Container = styled.div`
-  min-height: 100vh;
-  padding-left: ${({ className }) =>
-    className?.includes("active") ? "300px" : "90px"};
+  height:100vh;
+  display: grid;
+  grid-template-columns: 90px auto;
   background: ${({ theme }) => theme.bgtotal};
-  color: ${({ theme }) => theme.text};
-  transition: padding-left 0.3s;
+  transition:all 0.3s ;
+  &.active {
+    grid-template-columns: 300px auto;
+  }
+  color:${({theme})=>theme.text};
 `;
 export default App;
