@@ -25,7 +25,7 @@ const Container = styled.div`
 const Hero = styled.div`
   text-align: center;
   margin-bottom: 1rem;
-  max-width: 1200px;
+  max-width: auto;
 `;
 
 const Title = styled.h1`
@@ -46,7 +46,7 @@ const CardGrid = styled.div`
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   width: 100%;
-  max-width: 1300px;
+  max-width: auto;
 `;
 
 const NavCard = styled(motion.div)`
