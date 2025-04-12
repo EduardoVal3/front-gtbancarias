@@ -1,4 +1,3 @@
-// components/ClienteComponents/GetClientes.jsx
 import React, { useEffect, useState } from 'react';
 import {
   DataGrid,
@@ -101,7 +100,7 @@ const GetClientes = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
-        rowAlternationEnabled={true} //No quiero esto
+        rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
       >
