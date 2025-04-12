@@ -70,7 +70,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -82,7 +82,7 @@ const StyledLink = styled(Link)`
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
     color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
-    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;

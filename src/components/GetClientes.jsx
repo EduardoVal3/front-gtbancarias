@@ -19,16 +19,22 @@ const GridWrapper = styled.div`
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
   padding: ${v.lgSpacing};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
-
+  @media (max-width: 768px) {
+    padding: 0rem;
+  }
   .dx-datagrid {
     border: none;
     background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
+    font-size: ${({ theme }) => theme.fontsm};
   }
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
+  }
+  .dx-widget{
+    color: ${({ theme })=> theme.text}
   }
   .dx-datagrid-headers {
     background-color: ${({ theme }) => theme.bg3};
@@ -57,7 +63,9 @@ const GridWrapper = styled.div`
   .dx-datagrid .dx-header-row .dx-datagrid-text-content {
     color: ${({ theme }) => theme.text};
   }
-
+  .dx-datagrid-content .dx-datagrid-table{
+    border-collapse: separate;
+  }
   .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row td {
     border-color: ${({ theme }) => theme.gray500};
   }

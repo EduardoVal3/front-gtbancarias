@@ -9,19 +9,3 @@ const api = axios.create({
 });
 
 export default api;
-
-
-
-
-
-// Función para obtener todos los clientes
-
-
-// Funciones adicionales :
-// export const createCliente = async (cliente) => {
-//   await api.post('/cliente', cliente);
-// };
-// ...
-
-
-// más funciones (PUT, DELETE)
