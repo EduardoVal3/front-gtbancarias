@@ -12,6 +12,7 @@ import {
 import { getClientes } from '../services/clienteService';
 import styled, { useTheme } from 'styled-components';
 import { v } from '../styles/Variables';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -23,12 +24,19 @@ const GridWrapper = styled.div`
   overflow-x: auto;
   @media (max-width: 768px) {
     padding: 0rem;
+    padding-top: 0.26rem;
   }
   .dx-datagrid {
     border: none;
     background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
     font-size: ${({ theme }) => theme.fontsm};
+  }
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select{
+    padding: 0;
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
   }
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -91,6 +99,7 @@ const GetClientes = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error al obtener los clientes", "error", 6000);
       }
     };
 
@@ -99,8 +108,6 @@ const GetClientes = () => {
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -119,7 +126,7 @@ const GetClientes = () => {
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
-        <Column dataField="Id" caption="ID" width={70} />
+        <Column dataField="Id" caption="ID" width={50} />
         <Column dataField="Nombre" caption="Nombre" />
         <Column dataField="Apellido" caption="Apellido" />
         <Column dataField="Email" caption="Email" />

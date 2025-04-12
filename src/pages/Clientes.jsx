@@ -52,6 +52,9 @@ const Container = styled.div`
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
+    @media (max-width: 768px) {
+        padding: 0.75rem;
+    }
   }
 `;
 const Title = styled.h1`
