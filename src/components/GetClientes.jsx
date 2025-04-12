@@ -23,6 +23,10 @@ const GridWrapper = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
 
+  @media (max-width: 768px) {
+    width: 200vh;
+  }
+
   .dx-datagrid {
     border: none;
     font-size: ${({ theme }) => theme.fontsm};
