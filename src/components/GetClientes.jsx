@@ -25,6 +25,14 @@ const GridWrapper = styled.div`
   @media (max-width: 768px) {
     padding: 0rem;
     padding-top: 0.26rem;
+    .dx-toolbar .dx-toolbar-menu-container{
+      padding-inline-end: 0.28rem;
+    }
+    .dx-pager .dx-pages .dx-page-indexes{
+      padding: 0.50rem;
+      font-size: 0.80rem;
+      padding-inline-end: 0.50rem
+    }
   }
   .dx-datagrid {
     border: none;
@@ -39,9 +47,7 @@ const GridWrapper = styled.div`
     max-width: 50px;
 
   }
-  .dx-toolbar .dx-toolbar-menu-container{
-    padding-inline-end: 0.28rem;
-  }
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
