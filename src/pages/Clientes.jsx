@@ -47,7 +47,7 @@ export function Clientes() {
 
 // Estilos
 const Container = styled.div`
-    height: 100vh;
+    height: auto;
     background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};

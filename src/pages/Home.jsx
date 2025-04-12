@@ -12,9 +12,9 @@ import { getTarjetasCredito } from "../services/tarjetaCreditoService";
 import { getCuentasBancarias } from "../services/cuentaBancariaService";
 
 const Container = styled.div`
-  height:100vh;
-  background-color: ${({ theme }) => theme.bgtotal};
-  color: ${({ theme }) => theme.text};
+  height:auto;
+  background-color: ${(props)=>props.theme.bgtotal};
+  color: ${(props)=>props.theme.text};
 
   padding: ${v.lgSpacing};
   display: flex;
