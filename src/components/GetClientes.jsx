@@ -109,7 +109,7 @@ const GetClientes = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("Error al obtener los clientes", "error", 6000);
+        notify("Error al obtener los clientes", "error", 4000);
       }
     };
 
