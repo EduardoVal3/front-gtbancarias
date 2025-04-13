@@ -24,9 +24,9 @@ const GridWrapper = styled.div`
   overflow-x: auto;
   @media (max-width: 768px) {
     padding: 0rem;
-    padding-top: 0.26rem;
+    padding-top: 0.35rem;
     .dx-toolbar .dx-toolbar-menu-container{
-      padding-inline-end: 0.30rem;
+      padding-inline-end: 0.35rem;
     }
     .dx-pager .dx-pages .dx-page-indexes{
       padding: 0.50rem;
