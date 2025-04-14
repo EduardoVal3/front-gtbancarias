@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
 import GetClientes from "../components/GetClientes";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
+import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaUsers } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
 import PostClient from "../components/PostClient";
 import PutClient from "../components/PutClient";
 import DeleteClient from "../components/DeleteClient";
+import { MdAdd, MdDelete, MdEdit, MdLibraryAdd } from "react-icons/md";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Clientes() {
@@ -16,30 +17,30 @@ export function Clientes() {
             <Title>Gestiona los clientes</Title>
 
             <Navbar>
-                <StyledLink href="/getclientes" $active={location === "/getclientes"}>
-                    <FaUser />
+                <StyledLink href="/clientes/lista" $active={location.endsWith("lista")}>
+                    <FaUsers />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/postcliente" $active={location === "/postcliente"}>
-                    <FaUserPlus />
+                <StyledLink href="/clientes/crear" $active={location.endsWith("crear")}>
+                    <MdLibraryAdd />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/putcliente" $active={location === "/putcliente"}>
-                    <FaUserEdit />
+                <StyledLink href="/clientes/editar" $active={location.endsWith("editar")}>
+                    <MdEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
-                    <FaUserTimes />
+                <StyledLink href="/clientes/eliminar" $active={location.endsWith("eliminar")}>
+                    <MdDelete />
                     <span>Eliminar</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/getclientes" component={GetClientes} />
-                <Route path="/postcliente" component={PostClient} />
-                <Route path="/putcliente" component={PutClient} />
-                <Route path="/deletecliente" component={DeleteClient} />
+                <Route path="/clientes/lista" component={GetClientes} />
+                <Route path="/clientes/crear" component={PostClient} />
+                <Route path="/clientes/editar" component={PutClient} />
+                <Route path="/clientes/eliminar" component={DeleteClient} />
             </div>
         </Container>
     );

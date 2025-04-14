@@ -3,13 +3,10 @@ import logo from "../assets/Banco.png"
 import { v } from "../styles/Variables";
 import {
     AiOutlineLeft,
-    AiOutlineHome,
     AiOutlineSetting,
   } from "react-icons/ai";
-import { FaUser, FaUserTie } from "react-icons/fa";
-import { MdAccountBalanceWallet, MdLogout } from "react-icons/md";
-import { FaMoneyBillTrendUp, FaRegCreditCard } from "react-icons/fa6";
-import { GiTakeMyMoney } from "react-icons/gi";
+import { FaCreditCard, FaExchangeAlt, FaHome, FaMoneyCheckAlt, FaUniversity, FaUsers, FaUserTie } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
@@ -87,12 +84,12 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
 const linksArray = [
     {
       label: "Home",
-      icon: <AiOutlineHome />,
+      icon: <FaHome />,
       to: "/",
     },
     {
       label: "Clientes",
-      icon: <FaUser />,
+      icon: <FaUsers />,
       to: "/clientes",
     },
     {
@@ -102,22 +99,22 @@ const linksArray = [
     },
     {
       label: "Cuentas Bancarias",
-      icon: <MdAccountBalanceWallet />,
+      icon: <FaUniversity />,
       to: "/cuentas",
     },
     {
       label: "Tarjetas de Crédito",
-      icon: <FaRegCreditCard />,
-      to: "tarjetas",
+      icon: <FaCreditCard />,
+      to: "/tarjetas",
     },
     {
       label: "Transacciones",
-      icon: <FaMoneyBillTrendUp />,
+      icon: <FaExchangeAlt />,
       to: "/transacciones",
     },
     {
       label: "Préstamos",
-      icon: <GiTakeMyMoney />,
+      icon: <FaMoneyCheckAlt />,
       to: "/prestamos",
     },
   ];

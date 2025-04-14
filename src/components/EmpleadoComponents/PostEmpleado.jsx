@@ -140,7 +140,7 @@ const PostEmpleado = () => {
             email: "",
             telefono: "",
             direccion: "",
-            tipo: "", // 👈 CAMBIO aquí
+            tipo: "",
           }}
       >
         <SimpleItem dataField="nombre" label={{ text: "Nombre" }}>
@@ -151,7 +151,7 @@ const PostEmpleado = () => {
           <RequiredRule message="El apellido es obligatorio" />
         </SimpleItem>
 
-        <SimpleItem dataField="correo" label={{ text: "Correo electrónico" }}>
+        <SimpleItem dataField="correo" label={{ text: "Correo" }}>
           <RequiredRule message="El correo es obligatorio" />
           <EmailRule message="Correo inválido" />
         </SimpleItem>
@@ -167,7 +167,7 @@ const PostEmpleado = () => {
 
         <SimpleItem
           dataField="tipo"
-          label={{ text: "Tipo de empleado" }}
+          label={{ text: "Cargo" }}
           editorType="dxSelectBox"
           editorOptions={{
             items: tipoEmpleadoOptions,

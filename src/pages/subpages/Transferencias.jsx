@@ -1,49 +1,50 @@
 import styled from "styled-components";
-import { v } from "../styles/Variables";
-import { FaUserTie } from "react-icons/fa";
+import { v } from "../../styles/Variables";
+import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import GetEmpleados from "../components/EmpleadoComponents/GetEmpleado";
-import PutEmpleados from "../components/EmpleadoComponents/PutEmpleado";
-import DeleteEmpleado from "../components/EmpleadoComponents/DeleteEmpleado";
-import { MdDelete, MdEdit, MdLibraryAdd } from "react-icons/md";
-import PostEmpleado from "../components/EmpleadoComponents/PostEmpleado";
+import GetTransferencias from "../../components/TransferenciasComponents/Get";
+import PutTransferencia from "../../components/TransferenciasComponents/Put";
+import DeleteTransferencia from "../../components/TransferenciasComponents/Delete";
+import PostTransferencia from "../../components/TransferenciasComponents/Post";
 
-export function Empleados() {
+// este es el Navbar que renderiza cada componente DataGrid
+export function Transferencia() {
     const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona los Empleados</Title>
+            <Title>Gestiona las transferencias</Title>
 
             <Navbar>
-                <StyledLink href="/empleados/lista" $active={location.endsWith("lista")}>
-                    <FaUserTie />
+                <StyledLink href="/transacciones/transferencia/lista" $active={location.endsWith("lista")}>
+                    <FaUser />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/empleados/crear" $active={location.endsWith("crear")}>
-                    <MdLibraryAdd />
+                <StyledLink href="/transacciones/transferencia/crear" $active={location.endsWith("crear")}>
+                    <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/empleados/editar" $active={location.endsWith("editar")}>
-                    <MdEdit />
+                <StyledLink href="/transacciones/transferencia/editar" $active={location.endsWith("editar")}>
+                    <FaUserEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/empleados/eliminar" $active={location.endsWith("eliminar")}>
-                    <MdDelete />
+                <StyledLink href="/transacciones/transferencia/eliminar" $active={location.endsWith("eliminar")}>
+                    <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/empleados/lista" component={GetEmpleados} />
-                <Route path="/empleados/crear" component={PostEmpleado} />
-                <Route path="/empleados/editar" component={PutEmpleados} />
-                <Route path="/empleados/eliminar" component={DeleteEmpleado} />
+                <Route path="/transacciones/transferencia/lista" component={GetTransferencias} />
+                <Route path="/transacciones/transferencia/crear" component={PostTransferencia} />
+                <Route path="/transacciones/transferencia/editar" component={PutTransferencia} />
+                <Route path="/transacciones/transferencia/eliminar" component={DeleteTransferencia} />
             </div>
         </Container>
     );
 }
+
 // Estilos
 const Container = styled.div`
     height: auto;
@@ -52,10 +53,10 @@ const Container = styled.div`
     color: ${({ theme }) => theme.text};
     max-width: auto;
     @media (max-width: 768px) {
-        padding: 0.75rem;
+        padding: 0rem;
     }
-  }
 `;
+
 const Title = styled.h1`
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 1.5rem;
@@ -64,7 +65,6 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
-
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;
@@ -72,7 +72,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg};
+    background: ${({ theme }) => theme.bg2};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -84,7 +84,7 @@ const StyledLink = styled(Link)`
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
     color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
-    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;

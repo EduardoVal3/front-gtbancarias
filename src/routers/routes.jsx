@@ -7,6 +7,7 @@ import { Transacciones } from "../pages/Transacciones"
 import { Tarjetas } from "../pages/Tarjetas"
 import { Prestamos } from "../pages/Prestamos"
 import { Sidebar } from "../components/Sidebar"
+import { Transacciones2 } from "../pages/Transacciones2"
 
 export function MyRoutes() {
     return (
@@ -16,7 +17,7 @@ export function MyRoutes() {
             <Route path="/empleados" element={<Empleados/>}/>
             <Route path="/cuentas" element={<CuentasBancarias/>}/>
             <Route path="/tarjetas" element={<Tarjetas/>}/>
-            <Route path="/transacciones" element={<Transacciones/>}/>
+            <Route path="/transacciones/*" element={<Transacciones2/>}/>
             <Route path="/prestamos" element={<Prestamos/>}/>
             {/* Añadir más rutas */}
         </Routes>

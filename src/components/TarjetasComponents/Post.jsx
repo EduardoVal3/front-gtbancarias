@@ -157,6 +157,10 @@ const PostTarjetaCredito = () => {
       >
         <SimpleItem dataField="numeroTarjeta" label={{ text: "Número de Tarjeta" }}>
           <RequiredRule message="Este campo es obligatorio" />
+          <PatternRule
+            pattern={/^\d{16}$/}
+            message="Número inválido (16 dígitos)"
+          />
         </SimpleItem>
 
         <SimpleItem
@@ -170,7 +174,7 @@ const PostTarjetaCredito = () => {
 
         <SimpleItem dataField="cvv" label={{ text: "CVV" }}>
           <RequiredRule message="Este campo es obligatorio" />
-          <PatternRule pattern="^\d{3,4}$" message="Debe ser un número de 3 o 4 dígitos" />
+          <PatternRule pattern="^\d{3}$" message="Debe ser un número de 3 dígitos" />
         </SimpleItem>
 
         <SimpleItem dataField="limiteCredito" label={{ text: "Límite de Crédito" }} editorType="dxNumberBox">
@@ -193,7 +197,7 @@ const PostTarjetaCredito = () => {
             searchEnabled: true,
           }}
         >
-          <RequiredRule message="Debe seleccionar un cliente" />
+          <RequiredRule message="Debe seleccionar un cliente"/>
         </SimpleItem>
 
         <SimpleItem colSpan={2}>

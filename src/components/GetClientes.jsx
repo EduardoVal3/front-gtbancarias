@@ -22,6 +22,7 @@ const GridWrapper = styled.div`
   padding: ${v.lgSpacing};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
+
   @media (max-width: 768px) {
     padding: 0rem;
     padding-top: 0.35rem;
@@ -45,7 +46,10 @@ const GridWrapper = styled.div`
     width: 50px;
     min-width: 50px;
     max-width: 50px;
-
+  }
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
+    width: 50px;
+    max-width: 50px;
   }
 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {

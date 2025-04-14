@@ -14,9 +14,6 @@ import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getTransferencias } from '../../services/transferenciaService';
 
-
-
-
 const GridWrapper = styled.div`
   
   background-color: ${({ theme }) => theme.bgtotal};

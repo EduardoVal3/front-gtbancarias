@@ -185,18 +185,18 @@ const PostTransferencia = () => {
           <RequiredRule message="Debe ingresar un monto" />
         </SimpleItem>
 
-        <SimpleItem
-          dataField="descripcion"
-          label={{ text: "Descripción" }}
-        >
-          <RequiredRule message="Debe ingresar una descripción" />
-        </SimpleItem>
 
         <SimpleItem
           dataField="hechoPor"
           label={{ text: "Hecho por" }}
         >
           <RequiredRule message="Debe ingresar quién realiza la transferencia" />
+        </SimpleItem>
+        <SimpleItem
+          dataField="descripcion"
+          label={{ text: "Descripción" }}
+        >
+          <RequiredRule message="Debe ingresar una descripción" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>
