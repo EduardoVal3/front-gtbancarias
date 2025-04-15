@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { v } from "../../styles/Variables";
 import { FaUserPlus, FaUserEdit, FaUserTimes, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import GetTarjetasCredito from "../../components/Tarjeta1Components/Get";
-import PutTarjetaCredito from "../../components/Tarjeta1Components/Put";
-import DeleteTarjetaCredito from "../../components/Tarjeta1Components/Delete";
 import PostTarjetaCredito from "../../components/Tarjeta1Components/Post";
+import GetPrestamosP from "../../components/PrestamoPComponents/Get";
+import PutPrestamoP from "../../components/PrestamoPComponents/Put";
+import DeletePrestamosP from "../../components/PrestamoPComponents/Delete";
+import { FaMoneyCheck } from "react-icons/fa6";
 
 export function PrestamoPersonal() {
     const [location] = useLocation(); 
@@ -16,7 +17,7 @@ export function PrestamoPersonal() {
 
             <Navbar>
                 <StyledLink href="/prestamos/personales/lista" $active={location.endsWith("lista")}>
-                    <FaCreditCard />
+                    <FaMoneyCheck />
                     <span>Lista</span>
                 </StyledLink>
                 <StyledLink href="/prestamos/personales/crear" $active={location.endsWith("crear")}>
@@ -35,10 +36,10 @@ export function PrestamoPersonal() {
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/prestamos/personales/lista" component={GetTarjetasCredito} />
+                <Route path="/prestamos/personales/lista" component={GetPrestamosP} />
                 <Route path="/prestamos/personales/crear" component={PostTarjetaCredito} />
-                <Route path="/prestamos/personales/editar" component={PutTarjetaCredito} />
-                <Route path="/prestamos/personales/eliminar" component={DeleteTarjetaCredito} />
+                <Route path="/prestamos/personales/editar" component={PutPrestamoP} />
+                <Route path="/prestamos/personales/eliminar" component={DeletePrestamosP} />
             </div>
         </Container>
     );

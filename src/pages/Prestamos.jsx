@@ -1,24 +1,23 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaRegCreditCard, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
 import { PrestamoPersonal } from "./subpages/PrestamoPersonal";
 import { PrestamoHipotecario } from "./subpages/PrestamoHipotecario";
+import { FaMoneyCheck, FaMoneyCheckDollar } from "react-icons/fa6";
 
 export function Prestamos() {
     const [location] = useLocation(); 
     return (
         <Container>
-            <Title>Elige el Tipo de Prestamo</Title>
+            <Title>Elige el Tipo de Préstamo</Title>
 
             <Navbar>
                 <StyledLink href="/prestamos/personales/" $active={location.endsWith("personales/")}>
-                    <FaCreditCard />
+                    <FaMoneyCheck />
                     <span>Personal</span>
                 </StyledLink>
                 <StyledLink href="/prestamos/hipotecarios/" $active={location.endsWith("hipotecarios/")}>
-                    <FaRegCreditCard />
+                    <FaMoneyCheckDollar />
                     <span>Hipotecario</span>
                 </StyledLink>
             </Navbar>
