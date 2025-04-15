@@ -8,10 +8,9 @@ import {
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
 import { v } from "../../styles/Variables";
-
 import notify from "devextreme/ui/notify";
-import { createCuentaBancaria } from "../../services/cuentaBancariaService";
 import { getClientes } from "../../services/clienteService";
+import { createTarjetaDebito } from "../../services/tarjetaDebitoService";
 
 const Container = styled.div`
   height: auto;
@@ -50,8 +49,6 @@ const ResponsiveForm = styled(Form)`
     color: ${(props) => props.theme.text};
     font-weight: 500;
   }
-
-
 
   .dx-validation-summary {
     margin-top: 1rem;
@@ -93,9 +90,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const tipoCuentaOptions = ["Ahorro", "Corriente", "Empresarial"];
-
-const PostCuenta = () => {
+const PostTarjetaDebito = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
   const [clientes, setClientes] = useState([]);
@@ -124,17 +119,18 @@ const PostCuenta = () => {
         const formData = formInstance.option("formData");
 
         try {
-          await createCuentaBancaria(formData);
-          notify("Cuenta creada exitosamente", "success", 3000);
+          await createTarjetaDebito(formData);
+          notify("Tarjeta de débito creada exitosamente", "success", 3000);
           formInstance.option("formData", {
-            numeroCuenta: "",
-            saldo: 0,
-            tipoString: "",
+            numeroTarjeta: "",
+            fechaExpiracion: "",
+            cvv: "",
+            saldoDisponible: 0,
             clienteId: 0,
           });
         } catch (error) {
-          console.error("❌ Error al crear cuenta:", error);
-          notify("Error al registrar cuenta", "error", 3000);
+          console.error("❌ Error al crear tarjeta:", error);
+          notify("Error al registrar la tarjeta de débito", "error", 3000);
         }
       }
     }
@@ -142,37 +138,44 @@ const PostCuenta = () => {
 
   return (
     <Container theme={theme}>
-      <Title theme={theme}>Registrar nueva cuenta bancaria</Title>
+      <Title theme={theme}>Registrar tarjeta de débito</Title>
       <ResponsiveForm
         ref={formRef}
         colCount={window.innerWidth > 768 ? 2 : 1}
         showColonAfterLabel={true}
         showValidationSummary={true}
         formData={{
-          numeroCuenta: "",
-          saldo: 0,
-          tipoString: "",
+          numeroTarjeta: "",
+          fechaExpiracion: "",
+          cvv: "",
+          saldoDisponible: 0,
           clienteId: 0,
         }}
       >
-        <SimpleItem dataField="numeroCuenta" label={{ text: "Número de cuenta" }}>
-          <RequiredRule message="El número de cuenta es obligatorio" />
-        </SimpleItem>
-
-        <SimpleItem dataField="saldo" label={{ text: "Saldo" }} editorType="dxNumberBox">
-          <RequiredRule message="El saldo es obligatorio" />
+        <SimpleItem dataField="numeroTarjeta" label={{ text: "Número de Tarjeta" }}>
+          <RequiredRule message="Este campo es obligatorio" />
+          <PatternRule
+            pattern={/^\d{16}$/}
+            message="Número inválido (16 dígitos)"
+          />
         </SimpleItem>
 
         <SimpleItem
-          dataField="tipoString"
-          label={{ text: "Tipo de cuenta" }}
-          editorType="dxSelectBox"
-          editorOptions={{
-            items: tipoCuentaOptions,
-            placeholder: "Seleccione un tipo",
-          }}
+          dataField="fechaExpiracion"
+          label={{ text: "Fecha de Expiración" }}
+          editorType="dxDateBox"
+          editorOptions={{ type: "date" }}
         >
-          <RequiredRule message="Debe seleccionar el tipo de cuenta" />
+          <RequiredRule message="Debe ingresar una fecha" />
+        </SimpleItem>
+
+        <SimpleItem dataField="cvv" label={{ text: "CVV" }}>
+          <RequiredRule message="Este campo es obligatorio" />
+          <PatternRule pattern="^\d{3}$" message="Debe ser un número de 3 dígitos" />
+        </SimpleItem>
+
+        <SimpleItem dataField="saldoDisponible" label={{ text: "Saldo Disponible" }} editorType="dxNumberBox">
+          <RequiredRule message="Este campo es obligatorio" />
         </SimpleItem>
 
         <SimpleItem
@@ -182,8 +185,8 @@ const PostCuenta = () => {
           editorOptions={{
             items: clientes,
             valueExpr: "Id",
-            displayExpr: (item) => item ? `${item.Id} - ${item.Nombre} - ${item.Apellido}` : "",
-            placeholder: "Seleccione el ID del cliente",
+            displayExpr: (item) => item ? `${item.Id} - ${item.Nombre} ${item.Apellido}` : "",
+            placeholder: "Seleccione un cliente",
             searchEnabled: true,
           }}
         >
@@ -194,7 +197,7 @@ const PostCuenta = () => {
           <ButtonWrapper>
             <StyledButton
               theme={theme}
-              text="Registrar Cuenta"
+              text="Registrar Tarjeta"
               type="success"
               onClick={handleButtonClick}
             />
@@ -205,4 +208,4 @@ const PostCuenta = () => {
   );
 };
 
-export default PostCuenta;
+export default PostTarjetaDebito;

@@ -13,6 +13,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getTransferencias } from '../../services/transferenciaService';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -84,6 +85,7 @@ const GetTransferencias = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error al obtener la lista de transferencias", "error", 3000)
       }
     };
 
@@ -92,8 +94,6 @@ const GetTransferencias = () => {
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -101,7 +101,7 @@ const GetTransferencias = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
-        //rowAlternationEnabled={true} //No quiero esto
+        rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
       >

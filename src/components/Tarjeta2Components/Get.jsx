@@ -8,14 +8,17 @@ import {
   Selection,
   Export,
   ColumnChooser,
-  Editing,
 } from 'devextreme-react/data-grid';
+
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
-import { getTarjetasCredito, updateTarjetaCredito } from '../../services/tarjetaCreditoService';
+import { getTarjetasDebito } from '../../services/tarjetaDebitoService';
+import notify from 'devextreme/ui/notify';
+
 
 
 const GridWrapper = styled.div`
+  
   background-color: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
@@ -38,11 +41,11 @@ const GridWrapper = styled.div`
   .dx-datagrid-rowsview .dx-row {
     background-color: ${({ theme }) => theme.bgtgderecha};
     transition: none !important;
-    color: ${({ theme }) => theme.gray500};
+    color: ${({ theme }) => theme.gray500}; // texto cambia
   }
 
   .dx-datagrid-rowsview .dx-row:hover {
-    background-color: ${({ theme }) => theme.bgtgderecha};
+    background-color: ${({ theme }) => theme.bgtgderecha}; /* hover desactivado */
   }
 
   .dx-datagrid .dx-row-focused,
@@ -68,7 +71,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const PutTarjetaCredito = () => {
+const GetTarjetasDebito = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,33 +81,21 @@ const PutTarjetaCredito = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getTarjetasCredito();
+        const data = await getTarjetasDebito();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de tarjetas de débito", "error", 3000)
       }
     };
 
     fetchClientes();
   }, []);
 
-  const onRowUpdating = async (e) => {
-    const id = e.oldData.Id;
-    const updatedCliente = { ...e.oldData, ...e.newData };
-
-    try {
-      await updateTarjetaCredito(id, updatedCliente);
-    } catch (err) {
-      console.error('Error actualizando cliente:', err);
-    }
-  };
-
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -112,35 +103,27 @@ const PutTarjetaCredito = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
+        rowAlternationEnabled={true} 
         wordWrapEnabled={true}
         height="auto"
-        onRowUpdating={onRowUpdating}
       >
-        <SearchPanel visible={true} width={240} placeholder="Buscar..." />
+        <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
         <Export enabled={true} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
-        <Editing
-          mode="row"
-          allowUpdating={true}
-          useIcons={true}
-        />
-
-        <Column dataField="Id" caption="ID" width={70} />
+        <Column dataField="Id" caption="ID" width={50} />
         <Column dataField="NumeroTarjeta" caption="Número de Tarjeta" />
         <Column dataField="CVV" caption="CVV" />
         <Column dataField="FechaExpiracion" caption="Expira" />
-        <Column dataField="LimiteCredito" caption="Crédito Límite" />
-        <Column dataField="SaldoPendiente" caption="Saldo Pendiente" />
+        <Column dataField="SaldoDisponible" caption="Saldo Disponible" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente ID" />
-        
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default PutTarjetaCredito;
+export default GetTarjetasDebito;

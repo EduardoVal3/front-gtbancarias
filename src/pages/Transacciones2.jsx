@@ -23,7 +23,7 @@ export function Transacciones2() {
                 </StyledLink>
                 <StyledLink href="/transacciones/deposito/" $active={location.endsWith("deposito/")}>
                     <FaMoneyBill />
-                    <span>Déposito</span>
+                    <span>Depósito</span>
                 </StyledLink>
                 <StyledLink href="/transacciones/retiro/" $active={location.endsWith("retiro/")}>
                     <FaMoneyBillTrendUp />
@@ -36,7 +36,6 @@ export function Transacciones2() {
             <div>
                 <Route path="/transacciones/deposito/*" component={Deposito} />
                 <Route path="/transacciones/retiro/*" component={Retiro} />
-                
                 <Route path="/transacciones/transferencia/*" component={Transferencia} />
             </div>
         </Container>

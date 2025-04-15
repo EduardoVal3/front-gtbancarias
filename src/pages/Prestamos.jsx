@@ -1,42 +1,32 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
 import GetClientes from "../components/GetClientes";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
-import { Link, Route } from "wouter";
-import DeleteClient from "../components/DeleteClient";
-import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
+import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaRegCreditCard, FaCreditCard } from "react-icons/fa";
+import { Link, Route, useLocation } from "wouter";
+import { PrestamoPersonal } from "./subpages/PrestamoPersonal";
+import { PrestamoHipotecario } from "./subpages/PrestamoHipotecario";
 
 export function Prestamos() {
+    const [location] = useLocation(); 
     return (
         <Container>
-            <Title>Gestiona los Préstamos</Title>
+            <Title>Elige el Tipo de Prestamo</Title>
 
             <Navbar>
-                <StyledLink href="/getclientes">
-                    <FaUser />
-                    <span>Lista</span>
+                <StyledLink href="/prestamos/personales/" $active={location.endsWith("personales/")}>
+                    <FaCreditCard />
+                    <span>Personal</span>
                 </StyledLink>
-                <StyledLink href="/postcliente">
-                    <FaUserPlus />
-                    <span>Crear</span>
-                </StyledLink>
-                <StyledLink href="/putcliente">
-                    <FaUserEdit />
-                    <span>Editar</span>
-                </StyledLink>
-                <StyledLink href="/deletecliente">
-                    <FaUserTimes />
-                    <span>Eliminar</span>
+                <StyledLink href="/prestamos/hipotecarios/" $active={location.endsWith("hipotecarios/")}>
+                    <FaRegCreditCard />
+                    <span>Hipotecario</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/getclientes" component={GetClientes} />
-                <Route path="/postcliente" component={PostClient} />
-                <Route path="/putcliente" component={PutClient} />
-                <Route path="/deletecliente" component={DeleteClient} />
+                <Route path="/prestamos/personales/*" component={PrestamoPersonal} />
+                <Route path="/prestamos/hipotecarios/*" component={PrestamoHipotecario} />
             </div>
         </Container>
     );
@@ -45,11 +35,15 @@ export function Prestamos() {
 // Estilos
 const Container = styled.div`
     height: auto;
+    background: ${(props) => props.theme.bgtotal};
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
+    @media (max-width: 768px) {
+        padding: 0.75rem;
+    }
+  }
 `;
-
 const Title = styled.h1`
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 1.5rem;
@@ -58,6 +52,7 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
+
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;
@@ -65,7 +60,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -76,8 +71,8 @@ const StyledLink = styled(Link)`
     align-items: center;
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
-    color: ${({ theme }) => theme.text};
-    background: ${({ theme }) => theme.bg3};
+    color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;
@@ -96,6 +91,7 @@ const StyledLink = styled(Link)`
     svg {
         font-size: 1.1rem;
         transition: color 0.3s ease;
+        color: ${({ $active }) => $active ? "#fff" : "inherit"};
     }
 
     span {

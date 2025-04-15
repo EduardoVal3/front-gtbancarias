@@ -12,7 +12,7 @@ export function Deposito() {
 
     return (
         <Container>
-            <Title>Gestiona los dépositos</Title>
+            <Title>Gestiona los depósitos</Title>
 
             <Navbar>
                 <StyledLink href="/transacciones/deposito/lista" $active={location.endsWith("lista")}>

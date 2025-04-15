@@ -103,7 +103,7 @@ const linksArray = [
       to: "/cuentas",
     },
     {
-      label: "Tarjetas de Crédito",
+      label: "Tarjetas",
       icon: <FaCreditCard />,
       to: "/tarjetas",
     },

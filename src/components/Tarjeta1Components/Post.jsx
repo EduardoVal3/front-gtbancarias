@@ -11,7 +11,7 @@ import { v } from "../../styles/Variables";
 
 import notify from "devextreme/ui/notify";
 import { getClientes } from "../../services/clienteService";
-import { createTarjetaCredito } from "../../services/tarjetaCreditoService"; // Asegurate de tener este servicio creado
+import { createTarjetaCredito } from "../../services/tarjetaCreditoService";
 
 const Container = styled.div`
   height: auto;

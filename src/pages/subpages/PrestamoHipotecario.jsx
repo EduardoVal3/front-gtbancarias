@@ -1,46 +1,44 @@
 import styled from "styled-components";
-import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
-import { FaUsers } from "react-icons/fa";
+import { v } from "../../styles/Variables";
+import { FaUserPlus, FaUserEdit, FaUserTimes, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
-import DeleteClient from "../components/DeleteClient";
-import { MdDelete, MdEdit, MdLibraryAdd } from "react-icons/md";
+import GetTarjetasCredito from "../../components/Tarjeta1Components/Get";
+import PutTarjetaCredito from "../../components/Tarjeta1Components/Put";
+import DeleteTarjetaCredito from "../../components/Tarjeta1Components/Delete";
+import PostTarjetaCredito from "../../components/Tarjeta1Components/Post";
 
-// este es el Navbar que renderiza cada componente DataGrid
-export function Clientes() {
-    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+export function PrestamoHipotecario() {
+    const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona los clientes</Title>
+            <Title>Gestiona los Prestamos Hipotecarios</Title>
 
             <Navbar>
-                <StyledLink href="/clientes/lista" $active={location.endsWith("lista")}>
-                    <FaUsers />
+                <StyledLink href="/prestamos/hipotecarios/lista" $active={location.endsWith("lista")}>
+                    <FaCreditCard />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/clientes/crear" $active={location.endsWith("crear")}>
-                    <MdLibraryAdd />
+                <StyledLink href="/prestamos/hipotecarios/crear" $active={location.endsWith("crear")}>
+                    <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/clientes/editar" $active={location.endsWith("editar")}>
-                    <MdEdit />
+                <StyledLink href="/prestamos/hipotecarios/editar" $active={location.endsWith("editar")}>
+                    <FaUserEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/clientes/eliminar" $active={location.endsWith("eliminar")}>
-                    <MdDelete />
+                <StyledLink href="/prestamos/hipotecarios/eliminar" $active={location.endsWith("eliminar")}>
+                    <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/clientes/lista" component={GetClientes} />
-                <Route path="/clientes/crear" component={PostClient} />
-                <Route path="/clientes/editar" component={PutClient} />
-                <Route path="/clientes/eliminar" component={DeleteClient} />
+                <Route path="/prestamos/hipotecarios/lista" component={GetTarjetasCredito} />
+                <Route path="/prestamos/hipotecarios/crear" component={PostTarjetaCredito} />
+                <Route path="/prestamos/hipotecarios/editar" component={PutTarjetaCredito} />
+                <Route path="/prestamos/hipotecarios/eliminar" component={DeleteTarjetaCredito} />
             </div>
         </Container>
     );
@@ -112,4 +110,3 @@ const StyledLink = styled(Link)`
         font-size: ${({ theme }) => theme.fontsm};
     }
 `;
-

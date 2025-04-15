@@ -1,46 +1,48 @@
 import styled from "styled-components";
-import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
-import { FaUsers } from "react-icons/fa";
+import { v } from "../../styles/Variables";
+import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaCreditCard, FaRegCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
-import DeleteClient from "../components/DeleteClient";
-import { MdDelete, MdEdit, MdLibraryAdd } from "react-icons/md";
+import GetTarjetasCredito from "../../components/Tarjeta1Components/Get";
+import PutTarjetaCredito from "../../components/Tarjeta1Components/Put";
+import DeleteTarjetaCredito from "../../components/Tarjeta1Components/Delete";
+import PostTarjetaCredito from "../../components/Tarjeta1Components/Post";
+import GetTarjetasDebito from "../../components/Tarjeta2Components/Get";
+import PostTarjetaDebito from "../../components/Tarjeta2Components/Post";
+import PutTarjetaDebito from "../../components/Tarjeta2Components/Put";
+import DeleteTarjetaDebito from "../../components/Tarjeta2Components/Delete";
 
-// este es el Navbar que renderiza cada componente DataGrid
-export function Clientes() {
-    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+export function TarjetaDebito() {
+    const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona los clientes</Title>
+            <Title>Gestiona las tarjetas de débito</Title>
 
             <Navbar>
-                <StyledLink href="/clientes/lista" $active={location.endsWith("lista")}>
-                    <FaUsers />
+                <StyledLink href="/tarjetas/debito/lista" $active={location.endsWith("lista")}>
+                    <FaRegCreditCard />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/clientes/crear" $active={location.endsWith("crear")}>
-                    <MdLibraryAdd />
+                <StyledLink href="/tarjetas/debito/crear" $active={location.endsWith("crear")}>
+                    <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/clientes/editar" $active={location.endsWith("editar")}>
-                    <MdEdit />
+                <StyledLink href="/tarjetas/debito/editar" $active={location.endsWith("editar")}>
+                    <FaUserEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/clientes/eliminar" $active={location.endsWith("eliminar")}>
-                    <MdDelete />
+                <StyledLink href="/tarjetas/debito/eliminar" $active={location.endsWith("eliminar")}>
+                    <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/clientes/lista" component={GetClientes} />
-                <Route path="/clientes/crear" component={PostClient} />
-                <Route path="/clientes/editar" component={PutClient} />
-                <Route path="/clientes/eliminar" component={DeleteClient} />
+                <Route path="/tarjetas/debito/lista" component={GetTarjetasDebito} />
+                <Route path="/tarjetas/debito/crear" component={PostTarjetaDebito} />
+                <Route path="/tarjetas/debito/editar" component={PutTarjetaDebito} />
+                <Route path="/tarjetas/debito/eliminar" component={DeleteTarjetaDebito} />
             </div>
         </Container>
     );
@@ -112,4 +114,3 @@ const StyledLink = styled(Link)`
         font-size: ${({ theme }) => theme.fontsm};
     }
 `;
-

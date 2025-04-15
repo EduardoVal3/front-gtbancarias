@@ -1,46 +1,32 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
+import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaRegCreditCard, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostClient from "../components/PostClient";
-import GetTarjetasCredito from "../components/TarjetasComponents/Get";
-import PutTarjetaCredito from "../components/TarjetasComponents/Put";
-import DeleteTarjetaCredito from "../components/TarjetasComponents/Delete";
-import PostTarjetaCredito from "../components/TarjetasComponents/Post";
+import { TarjetaCredito } from "./subpages/TarjetaCredito";
+import { TarjetaDebito } from "./subpages/TarjetaDebito";
 
-// este es el Navbar que renderiza cada componente DataGrid
 export function Tarjetas() {
     const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona las Tarjetas de Crédito</Title>
+            <Title>Elige el Tipo de Tarjeta</Title>
 
             <Navbar>
-                <StyledLink href="/getclientes" $active={location === "/getclientes"}>
-                    <FaUser />
-                    <span>Lista</span>
+                <StyledLink href="/tarjetas/credito/" $active={location.endsWith("credito/")}>
+                    <FaCreditCard />
+                    <span>Crédito</span>
                 </StyledLink>
-                <StyledLink href="/postcliente" $active={location === "/postcliente"}>
-                    <FaUserPlus />
-                    <span>Crear</span>
-                </StyledLink>
-                <StyledLink href="/putcliente" $active={location === "/putcliente"}>
-                    <FaUserEdit />
-                    <span>Editar</span>
-                </StyledLink>
-                <StyledLink href="/deletecliente" $active={location === "/deletecliente"}>
-                    <FaUserTimes />
-                    <span>Eliminar</span>
+                <StyledLink href="/tarjetas/debito/" $active={location.endsWith("debito/")}>
+                    <FaRegCreditCard />
+                    <span>Débito</span>
                 </StyledLink>
             </Navbar>
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/getclientes" component={GetTarjetasCredito} />
-                <Route path="/postcliente" component={PostTarjetaCredito} />
-                <Route path="/putcliente" component={PutTarjetaCredito} />
-                <Route path="/deletecliente" component={DeleteTarjetaCredito} />
+                <Route path="/tarjetas/credito/*" component={TarjetaCredito} />
+                <Route path="/tarjetas/debito/*" component={TarjetaDebito} />
             </div>
         </Container>
     );
@@ -53,8 +39,11 @@ const Container = styled.div`
     padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
+    @media (max-width: 768px) {
+        padding: 0.75rem;
+    }
+  }
 `;
-
 const Title = styled.h1`
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 1.5rem;
@@ -63,6 +52,7 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
+
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;
@@ -70,7 +60,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -82,7 +72,7 @@ const StyledLink = styled(Link)`
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
     color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
-    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;

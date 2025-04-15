@@ -106,7 +106,7 @@ const PostClient = () => {
         try {
           await createCliente(formData);
           console.log("✅ Cliente creado:", formData);
-          notify("Cliente registrado exitosamente", "success", 4000);
+          notify("Cliente registrado exitosamente", "success", 3000);
 
           // Reiniciar formulario
           formInstance.option("formData", {
@@ -118,7 +118,7 @@ const PostClient = () => {
           });
         } catch (error) {
           console.error("❌ Error al crear cliente:", error);
-          notify("Error al registrar cliente", "error", 4000);
+          notify("Error al registrar cliente", "error", 3000);
         }
       } else {
         console.warn("Formulario inválido.");

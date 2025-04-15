@@ -113,7 +113,7 @@ const GetClientes = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("Error al obtener los clientes", "error", 4000);
+        notify("Error al obtener los clientes", "error", 3000);
       }
     };
 
@@ -126,8 +126,9 @@ const GetClientes = () => {
 
     try {
       await updateCliente(id, updatedCliente);
+      notify("Cliente actualizado exitosamente", "success", 3000)
     } catch (err) {
-      notify("Error actualizando cliente", "error", 4000);
+      notify("Error actualizando cliente", "error", 3000);
       console.error('Error actualizando cliente:', err);
     }
   };

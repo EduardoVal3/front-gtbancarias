@@ -14,6 +14,7 @@ import styled, { useTheme } from 'styled-components';
 
 import { deleteEmpleado, getEmpleados } from '../../services/empleadoService';
 import { v } from '../../styles/Variables';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -112,6 +113,7 @@ const DeleteEmpleado = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error al obtener la lista de empleados", "error", 3000)
       }
     };
 
@@ -121,15 +123,15 @@ const DeleteEmpleado = () => {
   const handleRowRemoved = async (e) => {
     try {
       await deleteEmpleado(e.data.Id);
+      notify("Empleado eliminado correctamente", "success", 3000)
     } catch (err) {
-      console.error('Error eliminando cliente:', err);
+      console.error('Error eliminando empleado:', err);
+      notify("Error eliminando el empleado", "error", 3000)
     }
   };
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
