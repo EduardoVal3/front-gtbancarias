@@ -109,7 +109,8 @@ const PostEmpleado = () => {
 
         try {
           await createEmpleado(formData);
-          notify("Empleado registrado exitosamente", "success", 4000);
+          console.log("✅ Empleado creado:", formData);
+          notify("Empleado registrado exitosamente", "success", 3000);
           formInstance.option("formData", {
             nombre: "",
             apellido: "",
@@ -151,7 +152,7 @@ const PostEmpleado = () => {
           <RequiredRule message="El apellido es obligatorio" />
         </SimpleItem>
 
-        <SimpleItem dataField="correo" label={{ text: "Correo" }}>
+        <SimpleItem dataField="email" label={{ text: "Correo" }}>
           <RequiredRule message="El correo es obligatorio" />
           <EmailRule message="Correo inválido" />
         </SimpleItem>

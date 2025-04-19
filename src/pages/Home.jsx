@@ -10,6 +10,7 @@ import { getEmpleados } from "../services/empleadoService";
 import { getTransferencias } from "../services/transferenciaService";
 import { getTarjetasCredito } from "../services/tarjetaCreditoService";
 import { getCuentasBancarias } from "../services/cuentaBancariaService";
+import { getPrestamosHipotecarios } from "../services/prestamoHipotecarioService";
 
 const Container = styled.div`
   height:auto;
@@ -32,6 +33,11 @@ const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontxxl};
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 0rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2.8rem;
+    line-height: 1.4;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -113,7 +119,7 @@ const Home = () => {
         getTransferencias(),
         getTarjetasCredito(),
         getCuentasBancarias(),
-        // getPrestamos(),
+        getPrestamosHipotecarios(),
       ]);
 
       setDataCounts({
@@ -122,7 +128,7 @@ const Home = () => {
         transacciones: transacciones.length,
         tarjetas: tarjetas.length,
         cuentas: cuentas.length,
-        //prestamos: prestamos.length,
+        prestamos: prestamos.length,
       });
     };
 
@@ -185,7 +191,7 @@ const Home = () => {
           <IconWrapper theme={theme}><FaMoneyCheckAlt /></IconWrapper>
           <CardTitle theme={theme}>Préstamos</CardTitle>
           <CardDesc theme={theme}>Personales e hipotecarios.</CardDesc>
-          
+          <Counter theme={theme}>{dataCounts.prestamos}</Counter>
         </NavCard>
       </CardGrid>
     </Container>

@@ -56,7 +56,7 @@ const Container = styled.div`
     color: ${({ theme }) => theme.text};
     max-width: auto;
     @media (max-width: 768px) {
-        padding: 0.75rem;
+        padding: 0rem;
     }
   }
 `;

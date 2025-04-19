@@ -48,8 +48,8 @@ const GridWrapper = styled.div`
     max-width: 50px;
   }
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
-    width: 50px;
-    max-width: 50px;
+    width: 60px;
+    max-width: 60px;
   }
 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {

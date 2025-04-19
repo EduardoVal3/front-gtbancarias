@@ -23,16 +23,42 @@ const GridWrapper = styled.div`
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
   padding: ${v.lgSpacing};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
 
+  @media (max-width: 768px) {
+    padding: 0rem;
+    padding-top: 0.35rem;
+    .dx-toolbar .dx-toolbar-menu-container{
+      padding-inline-end: 0.35rem;
+    }
+    .dx-pager .dx-pages .dx-page-indexes{
+      padding: 0.50rem;
+      font-size: 0.80rem;
+      padding-inline-end: 0.50rem
+    }
+  }
   .dx-datagrid {
     border: none;
-    font-size: ${({ theme }) => theme.fontsm};
     background-color: ${({ theme }) => theme.bgtotal};
     color: ${({ theme }) => theme.text};
+    font-size: ${({ theme }) => theme.fontsm};
   }
-
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-select{
+    padding: 0;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+  }
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
+    width: 60px;min-width: 60px;  
+  } 
+  .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
+    background-color: ${(props) => props.theme.bg2};
+  }
+  .dx-widget{
+    color: ${({ theme })=> theme.text}
+  }
   .dx-datagrid-headers {
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ theme }) => theme.text};
@@ -41,7 +67,6 @@ const GridWrapper = styled.div`
   .dx-datagrid-rowsview .dx-row {
     background-color: ${({ theme }) => theme.bgtgderecha};
     transition: none !important;
-    color: ${({ theme }) => theme.gray500}; // texto cambia
   }
 
   .dx-datagrid-rowsview .dx-row:hover {
@@ -61,7 +86,9 @@ const GridWrapper = styled.div`
   .dx-datagrid .dx-header-row .dx-datagrid-text-content {
     color: ${({ theme }) => theme.text};
   }
-
+  .dx-datagrid-content .dx-datagrid-table{
+    border-collapse: separate;
+  }
   .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row td {
     border-color: ${({ theme }) => theme.gray500};
   }

@@ -50,7 +50,7 @@ const GridWrapper = styled.div`
     max-width: 50px;
   }
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
-    width: 50px;min-width: 50px;  
+    width: 60px;min-width: 60px;  
   } 
 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
@@ -148,7 +148,7 @@ const DeleteRetiro = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

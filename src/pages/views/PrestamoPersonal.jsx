@@ -13,7 +13,7 @@ export function PrestamoPersonal() {
 
     return (
         <Container>
-            <Title>Gestiona los Prestamos Hipotecarios</Title>
+            <Title>Gestiona los Prestamos Personales</Title>
 
             <Navbar>
                 <StyledLink href="/prestamos/personales/lista" $active={location.endsWith("lista")}>
@@ -53,7 +53,7 @@ const Container = styled.div`
     color: ${({ theme }) => theme.text};
     max-width: auto;
     @media (max-width: 768px) {
-        padding: 0.75rem;
+        padding: 0rem;
     }
   }
 `;

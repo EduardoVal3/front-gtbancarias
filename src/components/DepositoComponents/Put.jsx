@@ -17,7 +17,6 @@ import notify from 'devextreme/ui/notify';
 import { getDepositos, updateDeposito } from '../../services/depositoService';
 
 const GridWrapper = styled.div`
-  
   background-color: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
@@ -49,9 +48,11 @@ const GridWrapper = styled.div`
     min-width: 50px;
     max-width: 50px;
   }
-  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
-    width: 50px;min-width: 50px;  
-  } 
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
+    width: 60px;
+    max-width: 60px;
+  }
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -150,7 +151,7 @@ const PutDeposito = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

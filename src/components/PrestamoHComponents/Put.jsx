@@ -51,7 +51,7 @@ const GridWrapper = styled.div`
     max-width: 50px;
   }
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
-    width: 50px;min-width: 50px;  
+    width: 60px;min-width: 60px;  
   } 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -151,7 +151,7 @@ const PutPrestamoH = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
@@ -166,8 +166,7 @@ const PutPrestamoH = () => {
         <Column dataField="TasaInteres" caption="Tasa de Interés" />
         <Column dataField="Finalidad" caption="Finalidad" />
         <Column dataField="FechaPago" caption="Fecha de Pago" />
-        <Column dataField="Estado" caption="Estado" />
-        <Column dataField="TipoString" caption="EstadoString" />
+        <Column dataField="TipoString" caption="Estado" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>

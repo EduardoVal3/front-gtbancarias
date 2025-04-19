@@ -48,15 +48,15 @@ export function Retiro() {
 // Estilos
 const Container = styled.div`
     height: auto;
-    padding: ${v.lgSpacing};
     background: ${(props) => props.theme.bgtotal};
+    padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
     @media (max-width: 768px) {
         padding: 0rem;
     }
+  }
 `;
-
 const Title = styled.h1`
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 1.5rem;
@@ -65,6 +65,7 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
+
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;
@@ -72,7 +73,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -84,7 +85,7 @@ const StyledLink = styled(Link)`
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
     color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
-    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;
