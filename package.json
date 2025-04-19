@@ -22,6 +22,8 @@
     "axios": "^1.8.4",
     "devextreme": "23.2.6",
     "devextreme-react": "23.2.6",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "framer-motion": "^12.6.3",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
