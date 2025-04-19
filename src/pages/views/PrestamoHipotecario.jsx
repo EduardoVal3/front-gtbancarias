@@ -1,33 +1,34 @@
 import styled from "styled-components";
 import { v } from "../../styles/Variables";
-import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
+import { FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PutTransferencia from "../../components/TransferenciasComponents/Put";
-import DeleteTransferencia from "../../components/TransferenciasComponents/Delete";
-import PostTransferencia from "../../components/TransferenciasComponents/Post";
-import GetTransferencias from "../../components/TransferenciasComponents/Get";
+import PostTarjetaCredito from "../../components/Tarjeta1Components/Post";
+import GetPrestamosH from "../../components/PrestamoHComponents/Get";
+import PutPrestamoH from "../../components/PrestamoHComponents/Put";
+import DeletePrestamosH from "../../components/PrestamoHComponents/Delete";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
 
-export function Deposito() {
+export function PrestamoHipotecario() {
     const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona los depósitos</Title>
+            <Title>Gestiona los Prestamos Hipotecarios</Title>
 
             <Navbar>
-                <StyledLink href="/transacciones/deposito/lista" $active={location.endsWith("lista")}>
-                    <FaUser />
+                <StyledLink href="/prestamos/hipotecarios/lista" $active={location.endsWith("lista")}>
+                    <FaMoneyCheckDollar />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/deposito/crear" $active={location.endsWith("crear")}>
+                <StyledLink href="/prestamos/hipotecarios/crear" $active={location.endsWith("crear")}>
                     <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/deposito/editar" $active={location.endsWith("editar")}>
+                <StyledLink href="/prestamos/hipotecarios/editar" $active={location.endsWith("editar")}>
                     <FaUserEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/deposito/eliminar" $active={location.endsWith("eliminar")}>
+                <StyledLink href="/prestamos/hipotecarios/eliminar" $active={location.endsWith("eliminar")}>
                     <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
@@ -35,10 +36,10 @@ export function Deposito() {
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/transacciones/deposito/lista" component={GetTransferencias} />
-                <Route path="/transacciones/deposito/crear" component={PostTransferencia} />
-                <Route path="/transacciones/deposito/editar" component={PutTransferencia} />
-                <Route path="/transacciones/deposito/eliminar" component={DeleteTransferencia} />
+                <Route path="/prestamos/hipotecarios/lista" component={GetPrestamosH} />
+                <Route path="/prestamos/hipotecarios/crear" component={PostTarjetaCredito} />
+                <Route path="/prestamos/hipotecarios/editar" component={PutPrestamoH} />
+                <Route path="/prestamos/hipotecarios/eliminar" component={DeletePrestamosH} />
             </div>
         </Container>
     );
@@ -47,15 +48,15 @@ export function Deposito() {
 // Estilos
 const Container = styled.div`
     height: auto;
-    padding: ${v.lgSpacing};
     background: ${(props) => props.theme.bgtotal};
+    padding: ${v.lgSpacing};
     color: ${({ theme }) => theme.text};
     max-width: auto;
     @media (max-width: 768px) {
-        padding: 0rem;
+        padding: 0.75rem;
     }
+  }
 `;
-
 const Title = styled.h1`
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 1.5rem;
@@ -64,6 +65,7 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
+
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;
@@ -71,7 +73,7 @@ const Navbar = styled.nav`
     flex-wrap: wrap;
     gap: ${v.mdSpacing};
     margin-bottom: ${v.lgSpacing};
-    background: ${({ theme }) => theme.bg2};
+    background: ${({ theme }) => theme.bg};
     padding: ${v.mdSpacing};
     border-radius: ${v.borderRadius};
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -83,7 +85,7 @@ const StyledLink = styled(Link)`
     gap: ${v.smSpacing};
     padding: ${v.smSpacing} ${v.mdSpacing};
     color: ${({ theme, $active }) => $active ? "#fff" : theme.text};
-    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg3};
+    background: ${({ theme, $active }) => $active ? theme.bg4 : theme.bg2};
     border-radius: ${v.borderRadius};
     text-decoration: none;
     font-weight: 500;

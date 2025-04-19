@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { v } from "../styles/Variables";
 import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes, FaRegCreditCard, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import { TarjetaCredito } from "./subpages/TarjetaCredito";
-import { TarjetaDebito } from "./subpages/TarjetaDebito";
+import { TarjetaCredito } from "./views/TarjetaCredito";
+import { TarjetaDebito } from "./views/TarjetaDebito";
 
 export function Tarjetas() {
     const [location] = useLocation(); 

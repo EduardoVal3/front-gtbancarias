@@ -13,6 +13,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getEmpleados, updateEmpleado } from '../../services/empleadoService';
+import notify from 'devextreme/ui/notify';
 
 
 const GridWrapper = styled.div`
@@ -124,8 +125,10 @@ const PutEmpleados = () => {
 
     try {
       await updateEmpleado(id, updatedCliente);
+      notify("Empleado actualizado exitosamente", "success", 3000);
     } catch (err) {
       console.error('Error actualizando cliente:', err);
+      notify("No se pudo actualizar el empleado. Verifique que el email no esté en uso", "error", 3000)
     }
   };
 
@@ -162,8 +165,7 @@ const PutEmpleados = () => {
         <Column dataField="Nombre" caption="Nombre" />
         <Column dataField="Apellido" caption="Apellido" />
         <Column dataField="Email" caption="Email" />
-        <Column dataField="Tipo" caption="Tipo" />
-        <Column dataField="TipoString" caption="TipoString" />
+        <Column dataField="TipoString" caption="Tipo" />
         <Column dataField="Telefono" caption="Teléfono" />
         <Column dataField="Direccion" caption="Dirección" />
         

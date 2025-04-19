@@ -1,3 +1,4 @@
+// components/ClienteComponents/GetClientes.jsx
 import React, { useEffect, useState } from 'react';
 import {
   DataGrid,
@@ -8,12 +9,13 @@ import {
   Selection,
   Export,
   ColumnChooser,
+  Editing,
 } from 'devextreme-react/data-grid';
-
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
-import { getEmpleados } from '../../services/empleadoService';
-
+import notify from 'devextreme/ui/notify';
+import { getPrestamosPersonales } from '../../services/prestamoPersonalService';
+import { getPrestamosHipotecarios, updatePrestamoHipotecario } from '../../services/prestamoHipotecarioService';
 
 const GridWrapper = styled.div`
   
@@ -48,11 +50,9 @@ const GridWrapper = styled.div`
     min-width: 50px;
     max-width: 50px;
   }
-  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
-    width: 50px;
-    max-width: 50px;
-  }
-
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
+    width: 50px;min-width: 50px;  
+  } 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -98,7 +98,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const GetEmpleados = () => {
+const PutPrestamoH = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -108,22 +108,34 @@ const GetEmpleados = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getEmpleados();
+        const data = await getPrestamosHipotecarios();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de préstamos", "error", 3000);
       }
     };
 
     fetchClientes();
   }, []);
 
+  const onRowUpdating = async (e) => {
+    const id = e.oldData.Id;
+    const updatedCliente = { ...e.oldData, ...e.newData };
+
+    try {
+      await updatePrestamoHipotecario(id, updatedCliente);
+      notify("Préstamo actualizado exitosamente", "success", 3000)
+    } catch (err) {
+      notify("No se pudo actualizar el préstamo", "error", 3000);
+      console.error('Error actualizando prestamo:', err);
+    }
+  };
+
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -134,6 +146,7 @@ const GetEmpleados = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onRowUpdating={onRowUpdating}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
@@ -142,16 +155,24 @@ const GetEmpleados = () => {
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
-        <Column dataField="Id" caption="ID" width={50} />
-        <Column dataField="Nombre" caption="Nombre" />
-        <Column dataField="Apellido" caption="Apellido" />
-        <Column dataField="Email" caption="Email" />
-        <Column dataField="TipoString" caption="Tipo" />
-        <Column dataField="Telefono" caption="Teléfono" />
-        <Column dataField="Direccion" caption="Dirección" />
+        <Editing
+          mode="row"
+          allowUpdating={true}
+          useIcons={true}
+        />
+
+        <Column dataField="Id" caption="ID" width={50} allowEditing={false} />
+        <Column dataField="MontoPrestamo" caption="Monto" />
+        <Column dataField="TasaInteres" caption="Tasa de Interés" />
+        <Column dataField="Finalidad" caption="Finalidad" />
+        <Column dataField="FechaPago" caption="Fecha de Pago" />
+        <Column dataField="Estado" caption="Estado" />
+        <Column dataField="TipoString" caption="EstadoString" />
+        <Column dataField="Cliente.Nombre" caption="Cliente" />
+        <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default GetEmpleados;
+export default PutPrestamoH;

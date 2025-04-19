@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { v } from "../styles/Variables";
 import { FaMoneyBill } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import { Deposito } from "./subpages/Deposito";
-import { Transferencia } from "./subpages/Transferencias";
-import { Retiro } from "./subpages/Retiro";
+import { Deposito } from "./views/Deposito";
+import { Transferencia } from "./views/Transferencias";
+import { Retiro } from "./views/Retiro";
 import { FaMoneyBillTransfer, FaMoneyBillTrendUp } from "react-icons/fa6";
 
 

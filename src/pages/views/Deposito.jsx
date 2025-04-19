@@ -5,30 +5,31 @@ import { Link, Route, useLocation } from "wouter";
 import PutTransferencia from "../../components/TransferenciasComponents/Put";
 import DeleteTransferencia from "../../components/TransferenciasComponents/Delete";
 import PostTransferencia from "../../components/TransferenciasComponents/Post";
-import GetTransferencias from "../../components/TransferenciasComponents/Get";
+import DeleteDeposito from "../../components/DepositoComponents/Delete";
+import GetDepositos from "../../components/DepositoComponents/Get";
+import PutDeposito from "../../components/DepositoComponents/Put";
 
-// este es el Navbar que renderiza cada componente DataGrid
-export function Retiro() {
+export function Deposito() {
     const [location] = useLocation(); 
 
     return (
         <Container>
-            <Title>Gestiona los retiros</Title>
+            <Title>Gestiona los depósitos</Title>
 
             <Navbar>
-                <StyledLink href="/transacciones/retiro/lista" $active={location.endsWith("lista")}>
+                <StyledLink href="/transacciones/deposito/lista" $active={location.endsWith("lista")}>
                     <FaUser />
                     <span>Lista</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/retiro/crear" $active={location.endsWith("crear")}>
+                <StyledLink href="/transacciones/deposito/crear" $active={location.endsWith("crear")}>
                     <FaUserPlus />
                     <span>Crear</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/retiro/editar" $active={location.endsWith("editar")}>
+                <StyledLink href="/transacciones/deposito/editar" $active={location.endsWith("editar")}>
                     <FaUserEdit />
                     <span>Editar</span>
                 </StyledLink>
-                <StyledLink href="/transacciones/retiro/eliminar" $active={location.endsWith("eliminar")}>
+                <StyledLink href="/transacciones/deposito/eliminar" $active={location.endsWith("eliminar")}>
                     <FaUserTimes />
                     <span>Eliminar</span>
                 </StyledLink>
@@ -36,10 +37,10 @@ export function Retiro() {
 
             {/* Rutas para renderizar los componentes */}
             <div>
-                <Route path="/transacciones/retiro/lista" component={GetTransferencias} />
-                <Route path="/transacciones/retiro/crear" component={PostTransferencia} />
-                <Route path="/transacciones/retiro/editar" component={PutTransferencia} />
-                <Route path="/transacciones/retiro/eliminar" component={DeleteTransferencia} />
+                <Route path="/transacciones/deposito/lista" component={GetDepositos} />
+                <Route path="/transacciones/deposito/crear" component={PostTransferencia} />
+                <Route path="/transacciones/deposito/editar" component={PutDeposito} />
+                <Route path="/transacciones/deposito/eliminar" component={DeleteDeposito} />
             </div>
         </Container>
     );

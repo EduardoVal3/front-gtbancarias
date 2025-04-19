@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
-import GetClientes from "../components/GetClientes";
 import { FaUsers } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostClient from "../components/PostClient";
-import PutClient from "../components/PutClient";
-import DeleteClient from "../components/DeleteClient";
 import { MdDelete, MdEdit, MdLibraryAdd } from "react-icons/md";
+import PutClient from "../components/ClienteComponents/PutClient";
+import DeleteClient from "../components/ClienteComponents/DeleteClient";
+import GetClientes from "../components/ClienteComponents/GetClientes";
+import PostClient from "../components/ClienteComponents/PostClient";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Clientes() {

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { v } from "../styles/Variables";
 import { Link, Route, useLocation } from "wouter";
-import { PrestamoPersonal } from "./subpages/PrestamoPersonal";
-import { PrestamoHipotecario } from "./subpages/PrestamoHipotecario";
+import { PrestamoPersonal } from "./views/PrestamoPersonal";
+import { PrestamoHipotecario } from "./views/PrestamoHipotecario";
 import { FaMoneyCheck, FaMoneyCheckDollar } from "react-icons/fa6";
 
 export function Prestamos() {

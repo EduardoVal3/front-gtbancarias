@@ -145,8 +145,7 @@ const GetPrestamosP = () => {
         <Column dataField="TasaInteres" caption="Tasa de Interés" />
         <Column dataField="Finalidad" caption="Finalidad" />
         <Column dataField="FechaPago" caption="Fecha de Pago" />
-        <Column dataField="Estado" caption="Estado" />
-        <Column dataField="TipoString" caption="EstadoString" />
+        <Column dataField="TipoString" caption="Estado" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>

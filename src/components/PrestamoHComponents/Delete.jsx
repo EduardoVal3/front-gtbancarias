@@ -1,3 +1,4 @@
+// components/ClienteComponents/GetClientes.jsx
 import React, { useEffect, useState } from 'react';
 import {
   DataGrid,
@@ -8,12 +9,13 @@ import {
   Selection,
   Export,
   ColumnChooser,
+  Editing,
 } from 'devextreme-react/data-grid';
-
 import styled, { useTheme } from 'styled-components';
+import notify from 'devextreme/ui/notify';
+import { deletePrestamoPersonal, getPrestamosPersonales } from '../../services/prestamoPersonalService';
 import { v } from '../../styles/Variables';
-import { getEmpleados } from '../../services/empleadoService';
-
+import { deletePrestamoHipotecario, getPrestamosHipotecarios } from '../../services/prestamoHipotecarioService';
 
 const GridWrapper = styled.div`
   
@@ -48,10 +50,9 @@ const GridWrapper = styled.div`
     min-width: 50px;
     max-width: 50px;
   }
-  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
-    width: 50px;
-    max-width: 50px;
-  }
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
+    width: 50px;min-width: 50px;  
+  } 
 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -98,7 +99,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const GetEmpleados = () => {
+const DeletePrestamosH = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -108,22 +109,31 @@ const GetEmpleados = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getEmpleados();
+        const data = await getPrestamosHipotecarios();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error obteniendo los préstamos", "error", 3000);
       }
     };
 
     fetchClientes();
   }, []);
 
+  const handleRowRemoved = async (e) => {
+    try {
+      await deletePrestamoHipotecario(e.data.Id);
+      notify("Préstamo eliminado correctamente", "success", 3000);
+    } catch (err) {
+      console.error('Error eliminando préstamo:', err);
+      notify("Error eliminando préstamo", "error", 3000);
+    }
+  };
+
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -134,6 +144,7 @@ const GetEmpleados = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onRowRemoved={handleRowRemoved}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
@@ -142,16 +153,19 @@ const GetEmpleados = () => {
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
+        <Editing mode="row" allowDeleting={true} useIcons={true} />
+
         <Column dataField="Id" caption="ID" width={50} />
-        <Column dataField="Nombre" caption="Nombre" />
-        <Column dataField="Apellido" caption="Apellido" />
-        <Column dataField="Email" caption="Email" />
-        <Column dataField="TipoString" caption="Tipo" />
-        <Column dataField="Telefono" caption="Teléfono" />
-        <Column dataField="Direccion" caption="Dirección" />
+        <Column dataField="MontoPrestamo" caption="Monto" />
+        <Column dataField="TasaInteres" caption="Tasa de Interés" />
+        <Column dataField="TipoPropiedad" caption="Tipo de Propiedad" />
+        <Column dataField="FechaPago" caption="Fecha de Pago" />
+        <Column dataField="EstadoString" caption="Estado" />
+        <Column dataField="Cliente.Nombre" caption="Cliente" />
+        <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default GetEmpleados;
+export default DeletePrestamosH;

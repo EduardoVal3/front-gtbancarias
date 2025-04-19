@@ -9,11 +9,11 @@ import {
   Export,
   ColumnChooser,
 } from 'devextreme-react/data-grid';
-
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
-import { getEmpleados } from '../../services/empleadoService';
-
+import notify from 'devextreme/ui/notify';
+import { getDepositos } from '../../services/depositoService';
+import { getRetiros } from '../../services/retiroService';
 
 const GridWrapper = styled.div`
   
@@ -98,7 +98,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const GetEmpleados = () => {
+const GetRetiros = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -108,12 +108,13 @@ const GetEmpleados = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getEmpleados();
+        const data = await getRetiros();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error al obtener la lista de retiros", "error", 3000);
       }
     };
 
@@ -122,8 +123,6 @@ const GetEmpleados = () => {
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -143,15 +142,16 @@ const GetEmpleados = () => {
         <Paging enabled={true} pageSize={10} />
 
         <Column dataField="Id" caption="ID" width={50} />
-        <Column dataField="Nombre" caption="Nombre" />
-        <Column dataField="Apellido" caption="Apellido" />
-        <Column dataField="Email" caption="Email" />
-        <Column dataField="TipoString" caption="Tipo" />
-        <Column dataField="Telefono" caption="Teléfono" />
-        <Column dataField="Direccion" caption="Dirección" />
+        <Column dataField="Monto" caption="Monto" />
+        <Column dataField="CuentaId" caption="ID de la Cuenta" />
+        <Column dataField="Cuenta.NumeroCuenta" caption="Número de Cuenta" />
+        <Column dataField="Cuenta.TipoString" caption="Tipo de Cuenta" />
+        <Column dataField="HechoPor" caption="Hecho Por" />
+        <Column dataField="Descripcion" caption="Descripción" />
+        <Column dataField="Fecha" caption="Fecha" />
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default GetEmpleados;
+export default GetRetiros;

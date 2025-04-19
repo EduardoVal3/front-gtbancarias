@@ -14,7 +14,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
-import { getPrestamosPersonales } from '../../services/prestamoPersonalService';
+import { getPrestamosPersonales, updatePrestamoPersonal } from '../../services/prestamoPersonalService';
 
 const GridWrapper = styled.div`
   
@@ -125,7 +125,7 @@ const PutPrestamoP = () => {
     const updatedCliente = { ...e.oldData, ...e.newData };
 
     try {
-      await updateCliente(id, updatedCliente);
+      await updatePrestamoPersonal(id, updatedCliente);
       notify("Préstamo actualizado exitosamente", "success", 3000)
     } catch (err) {
       notify("No se pudo actualizar el préstamo", "error", 3000);
@@ -165,8 +165,7 @@ const PutPrestamoP = () => {
         <Column dataField="TasaInteres" caption="Tasa de Interés" />
         <Column dataField="Finalidad" caption="Finalidad" />
         <Column dataField="FechaPago" caption="Fecha de Pago" />
-        <Column dataField="Estado" caption="Estado" />
-        <Column dataField="TipoString" caption="EstadoString" />
+        <Column dataField="TipoString" caption="Estado" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>

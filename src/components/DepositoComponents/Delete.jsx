@@ -11,10 +11,10 @@ import {
   ColumnChooser,
   Editing,
 } from 'devextreme-react/data-grid';
-import { getClientes, updateCliente } from '../services/clienteService';
 import styled, { useTheme } from 'styled-components';
-import { v } from '../styles/Variables';
+import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
+import { deleteDeposito, getDepositos } from '../../services/depositoService';
 
 const GridWrapper = styled.div`
   
@@ -52,6 +52,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
     width: 50px;min-width: 50px;  
   } 
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -97,7 +98,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const GetClientes = () => {
+const DeleteDeposito = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -107,29 +108,26 @@ const GetClientes = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getClientes();
+        const data = await getDepositos();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("Error al obtener los clientes", "error", 3000);
+        notify("Error al obtener la lista de depósitos", "error", 3000);
       }
     };
 
     fetchClientes();
   }, []);
 
-  const onRowUpdating = async (e) => {
-    const id = e.oldData.Id;
-    const updatedCliente = { ...e.oldData, ...e.newData };
-
+  const handleRowRemoved = async (e) => {
     try {
-      await updateCliente(id, updatedCliente);
-      notify("Cliente actualizado exitosamente", "success", 3000)
+      await deleteDeposito(e.data.Id);
+      notify("Depósito eliminado exitosamente", "success", 3000)
     } catch (err) {
-      notify("Error actualizando cliente", "error", 3000);
-      console.error('Error actualizando cliente:', err);
+      console.error('No se pudo eliminar el depósito:', err);
+      notify("No se pudo eliminar el depósito", "error", 3000);
     }
   };
 
@@ -145,7 +143,7 @@ const GetClientes = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
-        onRowUpdating={onRowUpdating}
+        onRowRemoved={handleRowRemoved}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
@@ -154,21 +152,19 @@ const GetClientes = () => {
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
-        <Editing
-          mode="row"
-          allowUpdating={true}
-          useIcons={true}
-        />
+        <Editing mode="row" allowDeleting={true} useIcons={true} />
 
-        <Column dataField="Id" caption="ID" width={50} allowEditing={false} />
-        <Column dataField="Nombre" caption="Nombre" />
-        <Column dataField="Apellido" caption="Apellido" />
-        <Column dataField="Email" caption="Email" />
-        <Column dataField="Telefono" caption="Teléfono" />
-        <Column dataField="Direccion" caption="Dirección" />
+        <Column dataField="Id" caption="ID" width={50} />
+        <Column dataField="Monto" caption="Monto" />
+        <Column dataField="CuentaId" caption="ID de la Cuenta" />
+        <Column dataField="Cuenta.NumeroCuenta" caption="Número de Cuenta" />
+        <Column dataField="Cuenta.TipoString" caption="Tipo de Cuenta" />
+        <Column dataField="HechoPor" caption="Hecho Por" />
+        <Column dataField="Descripcion" caption="Descripción" />
+        <Column dataField="Fecha" caption="Fecha" />
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default GetClientes;
+export default DeleteDeposito;

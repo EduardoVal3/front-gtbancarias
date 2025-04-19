@@ -1,18 +1,16 @@
-// PostEmpleado.jsx
 import React, { useContext, useRef } from "react";
 import {
   Form,
   SimpleItem,
   RequiredRule,
   EmailRule,
-  PatternRule
+  PatternRule,
 } from "devextreme-react/form";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
-import { v } from "../../styles/Variables";
+import { v } from "../styles/Variables";
+import { createCliente } from "../services/clienteService";
 import notify from "devextreme/ui/notify";
-import { createEmpleado } from "../../services/empleadoService";
-
 
 const Container = styled.div`
   height: auto;
@@ -48,12 +46,13 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-field-item-label-text {
-    color: ${(props) => props.theme.text};
+    color: ${(props) => props.theme.text}; /* Aquí aplicamos el color del tema */
     font-weight: 500;
   }
 
   .dx-validation-summary {
     margin-top: 1rem;
+    color: ${({ theme }) => theme.red500};
   }
 
   @media (max-width: 768px) {
@@ -62,7 +61,6 @@ const ResponsiveForm = styled(Form)`
     }
   }
 `;
-
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -92,9 +90,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const tipoEmpleadoOptions = ["Cajero", "Gerente", "Asistente", "Auditor"];
-
-const PostEmpleado = () => {
+const PostClient = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
 
@@ -108,40 +104,43 @@ const PostEmpleado = () => {
         const formData = formInstance.option("formData");
 
         try {
-          await createEmpleado(formData);
-          notify("Empleado registrado exitosamente", "success", 4000);
+          await createCliente(formData);
+          console.log("✅ Cliente creado:", formData);
+          notify("Cliente registrado exitosamente", "success", 3000);
+
+          // Reiniciar formulario
           formInstance.option("formData", {
             nombre: "",
             apellido: "",
             email: "",
             telefono: "",
             direccion: "",
-            tipo: "",
           });
         } catch (error) {
-          console.error("❌ Error al registrar empleado:", error);
-          notify("Error al registrar empleado. Verifique que el email no esté en uso", "error", 4000);
+          console.error("❌ Error al crear cliente:", error);
+          notify("Error al registrar cliente", "error", 3000);
         }
+      } else {
+        console.warn("Formulario inválido.");
       }
     }
   };
 
   return (
     <Container theme={theme}>
-      <Title theme={theme}>Registrar nuevo empleado</Title>
+      <Title theme={theme}>Registrar nuevo cliente</Title>
       <ResponsiveForm
         ref={formRef}
         colCount={window.innerWidth > 768 ? 2 : 1}
         showColonAfterLabel={true}
         showValidationSummary={true}
         formData={{
-            nombre: "",
-            apellido: "",
-            email: "",
-            telefono: "",
-            direccion: "",
-            tipo: "",
-          }}
+          nombre: "",
+          apellido: "",
+          email: "",
+          telefono: "",
+          direccion: "",
+        }}
       >
         <SimpleItem dataField="nombre" label={{ text: "Nombre" }}>
           <RequiredRule message="El nombre es obligatorio" />
@@ -151,40 +150,31 @@ const PostEmpleado = () => {
           <RequiredRule message="El apellido es obligatorio" />
         </SimpleItem>
 
-        <SimpleItem dataField="correo" label={{ text: "Correo" }}>
+        <SimpleItem dataField="email" label={{ text: "Correo" }}>
           <RequiredRule message="El correo es obligatorio" />
-          <EmailRule message="Correo inválido" />
+          <EmailRule message="Correo electrónico no válido" />
         </SimpleItem>
 
         <SimpleItem dataField="telefono" label={{ text: "Teléfono" }}>
           <RequiredRule message="El teléfono es obligatorio" />
-          <PatternRule pattern={/^[0-9]+$/} message="Solo se permiten números" />
+          <PatternRule
+            pattern={/^\d{7,15}$/}
+            message="Número inválido (7-15 dígitos)"
+          />
         </SimpleItem>
 
-        <SimpleItem dataField="direccion" label={{ text: "Dirección" }}>
+        <SimpleItem dataField="direccion" label={{ text: "Dirección" }} colSpan={2}>
           <RequiredRule message="La dirección es obligatoria" />
-        </SimpleItem>
-
-        <SimpleItem
-          dataField="tipo"
-          label={{ text: "Cargo" }}
-          editorType="dxSelectBox"
-          editorOptions={{
-            items: tipoEmpleadoOptions,
-            placeholder: "Seleccione un tipo",
-          }}
-        >
-          <RequiredRule message="Debe seleccionar un tipo de empleado" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>
           <ButtonWrapper>
-            <StyledButton
-              theme={theme}
-              text="Registrar Empleado"
-              type="success"
-              onClick={handleButtonClick}
-            />
+          <StyledButton
+            theme={theme}
+            text="Registrar"
+            type="success"
+            onClick={handleButtonClick}
+          />
           </ButtonWrapper>
         </SimpleItem>
       </ResponsiveForm>
@@ -192,4 +182,7 @@ const PostEmpleado = () => {
   );
 };
 
-export default PostEmpleado;
+export default PostClient;
+
+
+

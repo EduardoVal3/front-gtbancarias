@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   DataGrid,
   Column,
@@ -9,9 +9,12 @@ import {
   Export,
   ColumnChooser,
 } from 'devextreme-react/data-grid';
-import { getClientes } from '../services/clienteService';
+import { Workbook } from 'exceljs';
+import saveAs from 'file-saver';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { getClientes } from '../../services/clienteService';
 import styled, { useTheme } from 'styled-components';
-import { v } from '../styles/Variables';
+import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
@@ -109,20 +112,40 @@ const GetClientes = () => {
         setIsLoading(true);
         const data = await getClientes();
         setClientes(data);
-        setIsLoading(false);
       } catch (err) {
         setError(err.message);
-        setIsLoading(false);
         notify("Error al obtener los clientes", "error", 3000);
+      } finally {
+        setIsLoading(false);
       }
     };
-
     fetchClientes();
+  }, []);
+
+  const onExporting = useCallback((e) => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Clientes');
+    
+    exportDataGrid({
+      component: e.component,
+      worksheet,
+      topLeftCell: { row: 1, column: 1 },
+      customizeCell: ({ excelCell }) => {
+        excelCell.font = { name: 'Arial', size: 12 };
+        excelCell.alignment = { horizontal: 'left' };
+      }
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Clientes.xlsx');
+      });
+    });
+
+    // cancel default export
+    e.cancel = true;
   }, []);
 
   return (
     <GridWrapper theme={theme}>
-
       <DataGrid
         dataSource={clientes}
         keyExpr="Id"
@@ -132,6 +155,7 @@ const GetClientes = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />

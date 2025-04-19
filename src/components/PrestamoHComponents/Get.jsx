@@ -9,11 +9,10 @@ import {
   Export,
   ColumnChooser,
 } from 'devextreme-react/data-grid';
-
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
-import { getEmpleados } from '../../services/empleadoService';
-
+import notify from 'devextreme/ui/notify';
+import { getPrestamosHipotecarios } from '../../services/prestamoHipotecarioService';
 
 const GridWrapper = styled.div`
   
@@ -98,7 +97,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const GetEmpleados = () => {
+const GetPrestamosH = () => {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -108,12 +107,13 @@ const GetEmpleados = () => {
     const fetchClientes = async () => {
       try {
         setIsLoading(true);
-        const data = await getEmpleados();
+        const data = await getPrestamosHipotecarios();
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("Error al obtener los préstamos", "error", 3000);
       }
     };
 
@@ -122,8 +122,6 @@ const GetEmpleados = () => {
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -143,15 +141,16 @@ const GetEmpleados = () => {
         <Paging enabled={true} pageSize={10} />
 
         <Column dataField="Id" caption="ID" width={50} />
-        <Column dataField="Nombre" caption="Nombre" />
-        <Column dataField="Apellido" caption="Apellido" />
-        <Column dataField="Email" caption="Email" />
-        <Column dataField="TipoString" caption="Tipo" />
-        <Column dataField="Telefono" caption="Teléfono" />
-        <Column dataField="Direccion" caption="Dirección" />
+        <Column dataField="MontoPrestamo" caption="Monto" />
+        <Column dataField="TasaInteres" caption="Tasa de Interés" />
+        <Column dataField="TipoPropiedad" caption="Tipo de Propiedad" />
+        <Column dataField="FechaPago" caption="Fecha de Pago" />
+        <Column dataField="TipoString" caption="Estado" />
+        <Column dataField="Cliente.Nombre" caption="Cliente" />
+        <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>
     </GridWrapper>
   );
 };
 
-export default GetEmpleados;
+export default GetPrestamosH;
