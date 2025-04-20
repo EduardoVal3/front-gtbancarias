@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -13,6 +13,9 @@ import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
 import { getDepositos } from '../../services/depositoService';
+import { Workbook } from 'exceljs';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver';
 
 const GridWrapper = styled.div`
   
@@ -120,6 +123,28 @@ const GetDepositos = () => {
     fetchClientes();
   }, []);
 
+  const onExporting = useCallback((e) => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Depósitos');
+    
+    exportDataGrid({
+      component: e.component,
+      worksheet,
+      topLeftCell: { row: 1, column: 1 },
+      customizeCell: ({ excelCell }) => {
+        excelCell.font = { name: 'Arial', size: 12 };
+        excelCell.alignment = { horizontal: 'left' };
+      }
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Depósitos.xlsx');
+      });
+    });
+
+    // cancela por defecto la exportaci'on
+    e.cancel = true;
+  }, []);
+
   return (
     <GridWrapper theme={theme}>
 
@@ -132,6 +157,7 @@ const GetDepositos = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />

@@ -145,6 +145,7 @@ const DeleteTarjetaCredito = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
+        rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
         onRowRemoved={handleRowRemoved}

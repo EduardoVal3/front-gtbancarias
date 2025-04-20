@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -14,6 +14,9 @@ import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
 import { getDepositos } from '../../services/depositoService';
 import { getRetiros } from '../../services/retiroService';
+import { Workbook } from 'exceljs';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver';
 
 const GridWrapper = styled.div`
   
@@ -114,11 +117,33 @@ const GetRetiros = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("Error al obtener la lista de retiros", "error", 3000);
+        notify("No se pudo obtener la lista de retiros", "error", 4000);
       }
     };
 
     fetchClientes();
+  }, []);
+
+  const onExporting = useCallback((e) => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Retiros');
+    
+    exportDataGrid({
+      component: e.component,
+      worksheet,
+      topLeftCell: { row: 1, column: 1 },
+      customizeCell: ({ excelCell }) => {
+        excelCell.font = { name: 'Arial', size: 12 };
+        excelCell.alignment = { horizontal: 'left' };
+      }
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Retiros.xlsx');
+      });
+    });
+
+    // cancela por defecto la exportaci'on
+    e.cancel = true;
   }, []);
 
   return (
@@ -133,6 +158,7 @@ const GetRetiros = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />

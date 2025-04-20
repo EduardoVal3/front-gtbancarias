@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -13,6 +13,9 @@ import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import notify from 'devextreme/ui/notify';
 import { getPrestamosHipotecarios } from '../../services/prestamoHipotecarioService';
+import { Workbook } from 'exceljs';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver';
 
 const GridWrapper = styled.div`
   
@@ -113,11 +116,33 @@ const GetPrestamosH = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("Error al obtener los préstamos", "error", 3000);
+        notify("No se pudo obtener la lista de préstamos", "error", 4000);
       }
     };
 
     fetchClientes();
+  }, []);
+
+  const onExporting = useCallback((e) => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('PréstamosHipotecarios');
+    
+    exportDataGrid({
+      component: e.component,
+      worksheet,
+      topLeftCell: { row: 1, column: 1 },
+      customizeCell: ({ excelCell }) => {
+        excelCell.font = { name: 'Arial', size: 12 };
+        excelCell.alignment = { horizontal: 'left' };
+      }
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'PréstamosHipotecarios.xlsx');
+      });
+    });
+
+    // cancela por defecto la exportaci'on
+    e.cancel = true;
   }, []);
 
   return (
@@ -132,6 +157,7 @@ const GetPrestamosH = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />

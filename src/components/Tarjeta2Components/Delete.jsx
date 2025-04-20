@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -12,9 +12,7 @@ import {
 } from 'devextreme-react/data-grid';
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
-import { deleteTarjetaCredito } from '../../services/tarjetaCreditoService';
 import { deleteTarjetaDebito, getTarjetasDebito } from '../../services/tarjetaDebitoService';
-import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -116,7 +114,7 @@ const DeleteTarjetaDebito = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        notify("No se pudo obtener la lista de tarjetas de débito", "error", 3000)
+        notify("No se pudo obtener la lista de tarjetas de débito", "error", 4000)
       }
     };
 
@@ -159,7 +157,7 @@ const DeleteTarjetaDebito = () => {
         <Column dataField="Id" caption="ID" width={50} />
         <Column dataField="NumeroTarjeta" caption="Número de Tarjeta" />
         <Column dataField="CVV" caption="CVV" />
-        <Column dataField="FechaExpiracion" caption="Expira" />
+        <Column dataField="FechaExpiracion" caption="Fecha de Expiración" />
         <Column dataField="SaldoDisponible" caption="Saldo Disponible" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente ID" />

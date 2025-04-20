@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -14,8 +14,9 @@ import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getTarjetasDebito } from '../../services/tarjetaDebitoService';
 import notify from 'devextreme/ui/notify';
-
-
+import { Workbook } from 'exceljs';
+import { saveAs } from 'file-saver';
+import { exportDataGrid } from 'devextreme/excel_exporter';
 
 const GridWrapper = styled.div`
   
@@ -121,6 +122,28 @@ const GetTarjetasDebito = () => {
     fetchClientes();
   }, []);
 
+  const onExporting = useCallback((e) => {
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet('TarjetasdeDébito');
+      
+      exportDataGrid({
+        component: e.component,
+        worksheet,
+        topLeftCell: { row: 1, column: 1 },
+        customizeCell: ({ excelCell }) => {
+          excelCell.font = { name: 'Arial', size: 12 };
+          excelCell.alignment = { horizontal: 'left' };
+        }
+      }).then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'TarjetasdeDébito.xlsx');
+        });
+      });
+  
+      // cancela por defecto la exportaci'on
+      e.cancel = true;
+    }, []);
+
   return (
     <GridWrapper theme={theme}>
 
@@ -133,6 +156,7 @@ const GetTarjetasDebito = () => {
         rowAlternationEnabled={true} 
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />

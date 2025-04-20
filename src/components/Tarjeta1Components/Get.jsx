@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -13,8 +13,10 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getTarjetasCredito } from '../../services/tarjetaCreditoService';
-
-
+import { Workbook } from 'exceljs';
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -113,11 +115,34 @@ const GetTarjetasCredito = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de tarjetas", "error", 4000)
       }
     };
 
     fetchClientes();
   }, []);
+
+  const onExporting = useCallback((e) => {
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet('TarjetasdeCrédito');
+      
+      exportDataGrid({
+        component: e.component,
+        worksheet,
+        topLeftCell: { row: 1, column: 1 },
+        customizeCell: ({ excelCell }) => {
+          excelCell.font = { name: 'Arial', size: 12 };
+          excelCell.alignment = { horizontal: 'left' };
+        }
+      }).then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'TarjetasdeCrédito.xlsx');
+        });
+      });
+  
+      // cancela por defecto la exportaci'on
+      e.cancel = true;
+    }, []);
 
   return (
     <GridWrapper theme={theme}>
@@ -130,11 +155,12 @@ const GetTarjetasCredito = () => {
         showBorders={false}
         columnAutoWidth={true}
         allowColumnResizing={true}
-        //rowAlternationEnabled={true} //No quiero esto
+        rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
-        <SearchPanel visible={true} width={240} placeholder="Buscar..." />
+        <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
         <Export enabled={true} allowExportSelectedData={true} />

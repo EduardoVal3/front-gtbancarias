@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DataGrid,
   Column,
@@ -14,8 +14,9 @@ import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getCuentasBancarias } from '../../services/cuentaBancariaService';
 import notify from 'devextreme/ui/notify';
-
-
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { saveAs } from 'file-saver';
+import { Workbook } from 'exceljs';
 
 const GridWrapper = styled.div`
   
@@ -106,6 +107,7 @@ const GetCuentas = () => {
   const [error, setError] = useState(null);
   const theme = useTheme();
 
+  
   useEffect(() => {
     const fetchClientes = async () => {
       try {
@@ -119,12 +121,35 @@ const GetCuentas = () => {
         notify("No se pudo obtener la lista de cuentas", "error", 3000)
       }
     };
-
+    
     fetchClientes();
+  }, []);
+  
+  const onExporting = useCallback((e) => {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Cuentas');
+    
+    exportDataGrid({
+      component: e.component,
+      worksheet,
+      topLeftCell: { row: 1, column: 1 },
+      customizeCell: ({ excelCell }) => {
+        excelCell.font = { name: 'Arial', size: 12 };
+        excelCell.alignment = { horizontal: 'left' };
+      }
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Cuentas.xlsx');
+      });
+    });
+
+    // cancela por defecto la exportaci'on
+    e.cancel = true;
   }, []);
 
   return (
     <GridWrapper theme={theme}>
+      {isLoading && <div>Cargando...</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -135,6 +160,7 @@ const GetCuentas = () => {
         rowAlternationEnabled={true}
         wordWrapEnabled={true}
         height="auto"
+        onExporting={onExporting}
       >
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
