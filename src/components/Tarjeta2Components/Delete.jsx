@@ -36,6 +36,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    }
   }
   .dx-datagrid {
     border: none;
@@ -126,7 +129,7 @@ const DeleteTarjetaDebito = () => {
       notify("Tarjeta eliminada exitosamente", "success", 3000);
     } catch (err) {
       console.error('Error eliminando tarjeta de debito:', err);
-      notify("Error eliminando la tarjeta de débito", "error", 3000);
+      notify("Error eliminando la tarjeta", "error", 4000);
     }
   };
 
@@ -147,7 +150,7 @@ const DeleteTarjetaDebito = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

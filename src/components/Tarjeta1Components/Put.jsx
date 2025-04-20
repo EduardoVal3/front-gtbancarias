@@ -13,6 +13,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { getTarjetasCredito, updateTarjetaCredito } from '../../services/tarjetaCreditoService';
+import notify from 'devextreme/ui/notify';
 
 
 const GridWrapper = styled.div`
@@ -35,6 +36,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -51,6 +55,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
     width: 60px;min-width: 60px;  
   } 
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -112,6 +117,7 @@ const PutTarjetaCredito = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de tarjetas de crédito", "error", 4000)
       }
     };
 
@@ -124,15 +130,15 @@ const PutTarjetaCredito = () => {
 
     try {
       await updateTarjetaCredito(id, updatedCliente);
+      notify("Tarjeta actualizada exitosamente", "success", 3000)
     } catch (err) {
-      console.error('Error actualizando cliente:', err);
+      console.error('Error actualizando tarjeta:', err);
+      notify("No se pudo actualizar la tarjeta. Verifique los datos ingresados", "error", 4000)
     }
   };
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -148,7 +154,7 @@ const PutTarjetaCredito = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

@@ -16,6 +16,7 @@ import { deleteEmpleado, getEmpleados } from '../../services/empleadoService';
 import { v } from '../../styles/Variables';
 import { deleteCuentaBancaria, getCuentasBancarias } from '../../services/cuentaBancariaService';
 import { deleteTarjetaCredito, getTarjetasCredito } from '../../services/tarjetaCreditoService';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -37,6 +38,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -53,6 +57,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
     width: 60px;min-width: 60px;  
   } 
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -114,6 +119,7 @@ const DeleteTarjetaCredito = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de tarjetas de crédito", "error", 4000)
       }
     };
 
@@ -123,15 +129,15 @@ const DeleteTarjetaCredito = () => {
   const handleRowRemoved = async (e) => {
     try {
       await deleteTarjetaCredito(e.data.Id);
+      notify("Tarjeta eliminada exitosamente", "success", 3000)
     } catch (err) {
       console.error('Error eliminando cliente:', err);
+      notify("No se pudo eliminar la tarjeta", "error", 4000)
     }
   };
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -143,16 +149,16 @@ const DeleteTarjetaCredito = () => {
         height="auto"
         onRowRemoved={handleRowRemoved}
       >
-        <SearchPanel visible={true} width={240} placeholder="Buscar..." />
+        <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 
         <Editing mode="row" allowDeleting={true} useIcons={true} />
 
-        <Column dataField="Id" caption="ID" width={70} />
+        <Column dataField="Id" caption="ID" width={50} />
         <Column dataField="NumeroTarjeta" caption="Número de Tarjeta" />
         <Column dataField="CVV" caption="CVV" />
         <Column dataField="FechaExpiracion" caption="Expira" />

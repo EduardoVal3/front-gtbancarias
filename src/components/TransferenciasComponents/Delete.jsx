@@ -13,6 +13,7 @@ import {
 import styled, { useTheme } from 'styled-components';
 import { v } from '../../styles/Variables';
 import { deleteTransferencia, getTransferencias } from '../../services/transferenciaService';
+import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
   
@@ -34,6 +35,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -50,6 +54,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
     width: 60px;min-width: 60px;  
   } 
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }
@@ -111,6 +116,7 @@ const DeleteTransferencia = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        notify("No se pudo obtener la lista de transferencias", "error", 4000)
       }
     };
 

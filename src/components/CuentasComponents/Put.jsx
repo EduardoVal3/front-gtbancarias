@@ -15,7 +15,6 @@ import { v } from '../../styles/Variables';
 import { getCuentasBancarias, updateCuentaBancaria } from '../../services/cuentaBancariaService';
 import notify from 'devextreme/ui/notify';
 
-
 const GridWrapper = styled.div`
   
   background-color: ${({ theme }) => theme.bgtotal};
@@ -36,6 +35,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -49,10 +51,9 @@ const GridWrapper = styled.div`
     min-width: 50px;
     max-width: 50px;
   }
-  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit.dx-command-edit-with-icons{
-    width: 60px;
-    max-width: 60px;
-  }
+  .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
+    width: 60px;min-width: 60px;  
+  } 
 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -131,7 +132,7 @@ const PutCuentas = () => {
       notify("Cuenta actualizada exitosamente", "success", 3000);
     } catch (err) {
       console.error('Error actualizando cliente:', err);
-      notify("Error actualizando la cuenta", "error", 3000);
+      notify("Error actualizando la cuenta", "error", 4000);
     }
   };
 
@@ -152,7 +153,7 @@ const PutCuentas = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

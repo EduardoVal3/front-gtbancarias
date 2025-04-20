@@ -16,7 +16,6 @@ import { getTransferencias, updateTransferencia } from '../../services/transfere
 import notify from 'devextreme/ui/notify';
 
 const GridWrapper = styled.div`
-  
   background-color: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
@@ -34,6 +33,9 @@ const GridWrapper = styled.div`
       padding: 0.50rem;
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
+    }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
     }
   }
   .dx-datagrid {

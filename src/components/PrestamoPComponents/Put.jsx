@@ -36,6 +36,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -52,6 +55,7 @@ const GridWrapper = styled.div`
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
     width: 60px;min-width: 60px;  
   } 
+
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
   }

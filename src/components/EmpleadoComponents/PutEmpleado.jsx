@@ -36,6 +36,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -50,7 +53,7 @@ const GridWrapper = styled.div`
     max-width: 50px;
   }
   .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit {  
-    width: 50px;min-width: 50px;  
+    width: 60px;min-width: 60px;  
   } 
   .dx-row-alt>td, .dx-datagrid .dx-row-alt>tr>td {
     background-color: ${(props) => props.theme.bg2};
@@ -111,6 +114,7 @@ const PutEmpleados = () => {
         setClientes(data);
         setIsLoading(false);
       } catch (err) {
+        notify("No se pudo obtener la lista de empleados")
         setError(err.message);
         setIsLoading(false);
       }
@@ -134,8 +138,6 @@ const PutEmpleados = () => {
 
   return (
     <GridWrapper theme={theme}>
-      {isLoading && <div>Cargando...</div>}
-      {error && <div>Error: {error}</div>}
 
       <DataGrid
         dataSource={clientes}
@@ -151,7 +153,7 @@ const PutEmpleados = () => {
         <SearchPanel visible={true} width={180} placeholder="Buscar..." />
         <FilterRow visible={true} />
         <Selection mode="multiple" showCheckBoxesMode="onClick" />
-        <Export enabled={true} allowExportSelectedData={true} />
+        <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
 

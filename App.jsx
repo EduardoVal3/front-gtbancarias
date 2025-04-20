@@ -34,5 +34,8 @@ const Container = styled.div`
   background: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   transition: padding-left 0.3s;
+  .dx-datagrid .dx-link{
+    color: ${(props)=>props.theme.bg4}
+  }
 `;
 export default App;

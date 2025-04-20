@@ -37,6 +37,9 @@ const GridWrapper = styled.div`
       font-size: 0.80rem;
       padding-inline-end: 0.50rem
     }
+    .dx-datagrid-header-panel{
+      padding-inline-end: 5.5px;
+    } /*     */
   }
   .dx-datagrid {
     border: none;
@@ -152,7 +155,6 @@ const DeletePrestamosH = () => {
         <Export enabled={false} allowExportSelectedData={true} />
         <ColumnChooser enabled={true} mode="select" />
         <Paging enabled={true} pageSize={10} />
-
         <Editing mode="row" allowDeleting={true} useIcons={true} />
 
         <Column dataField="Id" caption="ID" width={50} />
