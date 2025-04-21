@@ -7,7 +7,6 @@ import PutTransferencia from "../../components/TransferenciasComponents/Put";
 import DeleteTransferencia from "../../components/TransferenciasComponents/Delete";
 import PostTransferencia from "../../components/TransferenciasComponents/Post";
 
-// este es el Navbar que renderiza cada componente DataGrid
 export function Transferencia() {
     const [location] = useLocation(); 
 

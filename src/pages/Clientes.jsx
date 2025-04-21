@@ -8,9 +8,8 @@ import DeleteClient from "../components/ClienteComponents/DeleteClient";
 import GetClientes from "../components/ClienteComponents/GetClientes";
 import PostClient from "../components/ClienteComponents/PostClient";
 
-// este es el Navbar que renderiza cada componente DataGrid
 export function Clientes() {
-    const [location] = useLocation(); // 👈 Obtiene la ruta actual
+    const [location] = useLocation(); 
 
     return (
         <Container>

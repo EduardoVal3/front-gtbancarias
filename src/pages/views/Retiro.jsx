@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { v } from "../../styles/Variables";
 import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostTransferencia from "../../components/TransferenciasComponents/Post";
 import GetRetiros from "../../components/RetiroComponents/Get";
 import PutRetiro from "../../components/RetiroComponents/Put";
 import DeleteRetiro from "../../components/RetiroComponents/Delete";

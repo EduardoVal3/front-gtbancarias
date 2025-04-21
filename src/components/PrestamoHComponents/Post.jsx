@@ -9,7 +9,6 @@ import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
 import { v } from "../../styles/Variables";
 import notify from "devextreme/ui/notify";
-
 import { getClientes } from "../../services/clienteService";
 import { createPrestamoHipotecario } from "../../services/prestamoHipotecarioService";
 

@@ -65,7 +65,6 @@ const Title = styled.h1`
   line-height: 1.2; /* Mejora legibilidad en móviles */
 `;
 
-
 const Navbar = styled.nav`
     display: flex;
     justify-content: center;

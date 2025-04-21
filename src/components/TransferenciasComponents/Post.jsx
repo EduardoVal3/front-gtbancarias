@@ -153,7 +153,7 @@ const PostTransferencia = () => {
           editorOptions={{
             items: cuentas,
             valueExpr: "Id",
-            displayExpr: (item) => item ? `${item.Id} - ${item.NumeroCuenta} - ${item.Saldo}` : "",
+            displayExpr: (item) => item ? `${item.Id} - ${item.NumeroCuenta} - $${item.Saldo}` : "",
             placeholder: "Seleccione una cuenta origen",
             searchEnabled: true,
           }}
@@ -168,7 +168,7 @@ const PostTransferencia = () => {
           editorOptions={{
             items: cuentas,
             valueExpr: "Id",
-            displayExpr: (item) => item ? `${item.Id} - ${item.NumeroCuenta} - ${item.Saldo}` : "",
+            displayExpr: (item) => item ? `${item.Id} - ${item.NumeroCuenta} - $${item.Saldo}` : "",
             placeholder: "Seleccione una cuenta destino",
             searchEnabled: true,
           }}

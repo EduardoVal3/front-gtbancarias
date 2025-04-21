@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { v } from "../../styles/Variables";
 import { FaUserPlus, FaUserEdit, FaUserTimes, FaCreditCard } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PostTarjetaCredito from "../../components/Tarjeta1Components/Post";
 import GetPrestamosP from "../../components/PrestamoPComponents/Get";
 import PutPrestamoP from "../../components/PrestamoPComponents/Put";
 import DeletePrestamosP from "../../components/PrestamoPComponents/Delete";
