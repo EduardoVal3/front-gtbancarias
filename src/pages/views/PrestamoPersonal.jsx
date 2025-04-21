@@ -7,6 +7,7 @@ import GetPrestamosP from "../../components/PrestamoPComponents/Get";
 import PutPrestamoP from "../../components/PrestamoPComponents/Put";
 import DeletePrestamosP from "../../components/PrestamoPComponents/Delete";
 import { FaMoneyCheck } from "react-icons/fa6";
+import PostPrestamoPersonal from "../../components/PrestamoPComponents/Post";
 
 export function PrestamoPersonal() {
     const [location] = useLocation(); 
@@ -37,7 +38,7 @@ export function PrestamoPersonal() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/prestamos/personales/lista" component={GetPrestamosP} />
-                <Route path="/prestamos/personales/crear" component={PostTarjetaCredito} />
+                <Route path="/prestamos/personales/crear" component={PostPrestamoPersonal} />
                 <Route path="/prestamos/personales/editar" component={PutPrestamoP} />
                 <Route path="/prestamos/personales/eliminar" component={DeletePrestamosP} />
             </div>

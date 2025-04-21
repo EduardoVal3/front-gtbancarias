@@ -6,6 +6,7 @@ import PostTransferencia from "../../components/TransferenciasComponents/Post";
 import GetRetiros from "../../components/RetiroComponents/Get";
 import PutRetiro from "../../components/RetiroComponents/Put";
 import DeleteRetiro from "../../components/RetiroComponents/Delete";
+import PostRetiro from "../../components/RetiroComponents/Post";
 
 // este es el Navbar que renderiza cada componente DataGrid
 export function Retiro() {
@@ -37,7 +38,7 @@ export function Retiro() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/transacciones/retiro/lista" component={GetRetiros} />
-                <Route path="/transacciones/retiro/crear" component={PostTransferencia} />
+                <Route path="/transacciones/retiro/crear" component={PostRetiro} />
                 <Route path="/transacciones/retiro/editar" component={PutRetiro} />
                 <Route path="/transacciones/retiro/eliminar" component={DeleteRetiro} />
             </div>

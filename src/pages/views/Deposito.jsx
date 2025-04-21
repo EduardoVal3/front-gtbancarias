@@ -2,12 +2,10 @@ import styled from "styled-components";
 import { v } from "../../styles/Variables";
 import { FaUser, FaUserPlus, FaUserEdit, FaUserTimes } from "react-icons/fa";
 import { Link, Route, useLocation } from "wouter";
-import PutTransferencia from "../../components/TransferenciasComponents/Put";
-import DeleteTransferencia from "../../components/TransferenciasComponents/Delete";
-import PostTransferencia from "../../components/TransferenciasComponents/Post";
 import DeleteDeposito from "../../components/DepositoComponents/Delete";
 import GetDepositos from "../../components/DepositoComponents/Get";
 import PutDeposito from "../../components/DepositoComponents/Put";
+import PostDeposito from "../../components/DepositoComponents/Post";
 
 export function Deposito() {
     const [location] = useLocation(); 
@@ -38,7 +36,7 @@ export function Deposito() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/transacciones/deposito/lista" component={GetDepositos} />
-                <Route path="/transacciones/deposito/crear" component={PostTransferencia} />
+                <Route path="/transacciones/deposito/crear" component={PostDeposito} />
                 <Route path="/transacciones/deposito/editar" component={PutDeposito} />
                 <Route path="/transacciones/deposito/eliminar" component={DeleteDeposito} />
             </div>

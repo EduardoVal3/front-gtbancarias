@@ -1,16 +1,17 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Form,
   SimpleItem,
   RequiredRule,
-  EmailRule,
-  PatternRule,
+  RangeRule,
 } from "devextreme-react/form";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
-import { v } from "../styles/Variables";
-import { createCliente } from "../services/clienteService";
+import { v } from "../../styles/Variables";
 import notify from "devextreme/ui/notify";
+
+import { getClientes } from "../../services/clienteService";
+import { createPrestamoHipotecario } from "../../services/prestamoHipotecarioService";
 
 const Container = styled.div`
   height: auto;
@@ -36,7 +37,7 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-texteditor-input {
-    padding: 0.40rem;
+    padding: 0.4rem;
     border: 1px solid ${({ theme }) => theme.gray500};
     transition: border-color 0.3s ease;
 
@@ -46,13 +47,12 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-field-item-label-text {
-    color: ${(props) => props.theme.text}; /* Aquí aplicamos el color del tema */
+    color: ${({ theme }) => theme.text};
     font-weight: 500;
   }
 
   .dx-validation-summary {
     margin-top: 1rem;
-    color: ${({ theme }) => theme.red500};
   }
 
   @media (max-width: 768px) {
@@ -61,6 +61,7 @@ const ResponsiveForm = styled(Form)`
     }
   }
 `;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -90,91 +91,144 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const PostClient = () => {
+const estadoOptions = ["Activo", "Pagado", "Vencido"];
+
+const PostPrestamoHipotecario = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
+  const [clientes, setClientes] = useState([]);
 
-  const handleButtonClick = async () => {
-    const formInstance = formRef.current?.instance;
-
-    if (formInstance) {
-      const result = formInstance.validate();
-
-      if (result.isValid) {
-        const formData = formInstance.option("formData");
-
-        try {
-          await createCliente(formData);
-          console.log("✅ Cliente creado:", formData);
-          notify("Cliente registrado exitosamente", "success", 3000);
-
-          // Reiniciar formulario
-          formInstance.option("formData", {
-            nombre: "",
-            apellido: "",
-            email: "",
-            telefono: "",
-            direccion: "",
-          });
-        } catch (error) {
-          console.error("❌ Error al crear cliente:", error);
-          notify("Error al registrar cliente", "error", 3000);
-        }
-      } else {
-        console.warn("Formulario inválido.");
+  useEffect(() => {
+    const cargarClientes = async () => {
+      try {
+        const data = await getClientes();
+        setClientes(data);
+      } catch (error) {
+        console.error("Error al cargar clientes:", error);
+        notify("Error al cargar la lista de clientes", "error", 4000);
       }
+    };
+    cargarClientes();
+  }, []);
+
+  const handleSubmit = async () => {
+    const formInstance = formRef.current?.instance;
+    if (!formInstance) return;
+
+    const result = formInstance.validate();
+    if (!result.isValid) return;
+
+    const formData = formInstance.option("formData");
+    try {
+      await createPrestamoHipotecario(formData);
+      notify("Préstamo hipotecario registrado con éxito", "success", 4000);
+      formInstance.resetValues();
+    } catch (error) {
+      console.error("❌ Error al crear préstamo:", error);
+      notify("Error al registrar el préstamo", "error", 4000);
     }
   };
 
   return (
     <Container theme={theme}>
-      <Title theme={theme}>Registrar nuevo cliente</Title>
+      <Title theme={theme}>Registrar Préstamo Hipotecario</Title>
       <ResponsiveForm
         ref={formRef}
         colCount={window.innerWidth > 768 ? 2 : 1}
         showColonAfterLabel={true}
         showValidationSummary={true}
         formData={{
-          nombre: "",
-          apellido: "",
-          email: "",
-          telefono: "",
-          direccion: "",
+          clienteId: 0,
+          montoPrestamo: 0,
+          tasaInteres: 0,
+          cuotasPendientes: 0,
+          fechaPago: new Date(),
+          tipoString: "Activo",
+          tipoPropiedad: "",
         }}
       >
-        <SimpleItem dataField="nombre" label={{ text: "Nombre" }}>
-          <RequiredRule message="El nombre es obligatorio" />
+        <SimpleItem
+          dataField="clienteId"
+          label={{ text: "Cliente" }}
+          editorType="dxSelectBox"
+          editorOptions={{
+            items: clientes,
+            valueExpr: "Id",
+            displayExpr: (item) =>
+              item ? `${item.Id} - ${item.Nombre} ${item.Apellido}` : "",
+            placeholder: "Seleccione un cliente",
+            searchEnabled: true,
+          }}
+        >
+          <RequiredRule message="Debe seleccionar un cliente" />
         </SimpleItem>
 
-        <SimpleItem dataField="apellido" label={{ text: "Apellido" }}>
-          <RequiredRule message="El apellido es obligatorio" />
+        <SimpleItem
+          dataField="montoPrestamo"
+          label={{ text: "Monto del Préstamo" }}
+          editorType="dxNumberBox"
+        >
+          <RequiredRule message="Debe ingresar el monto del préstamo" />
+          <RangeRule min={0.01} message="Debe ser mayor que cero" />
         </SimpleItem>
 
-        <SimpleItem dataField="email" label={{ text: "Correo" }}>
-          <RequiredRule message="El correo es obligatorio" />
-          <EmailRule message="Correo electrónico no válido" />
+        <SimpleItem
+          dataField="tasaInteres"
+          label={{ text: "Tasa de Interés (%)" }}
+          editorType="dxNumberBox"
+          editorOptions={{ showSpinButtons: true, step: 0.01 }}
+        >
+          <RequiredRule message="Debe ingresar la tasa de interés" />
+          <RangeRule min={0} max={100} message="0–100 %" />
         </SimpleItem>
 
-        <SimpleItem dataField="telefono" label={{ text: "Teléfono" }}>
-          <RequiredRule message="El teléfono es obligatorio" />
-          <PatternRule
-            pattern={/^\d{7,15}$/}
-            message="Número inválido (7-15 dígitos)"
-          />
+        <SimpleItem
+          dataField="cuotasPendientes"
+          label={{ text: "Cuotas Pendientes" }}
+          editorType="dxNumberBox"
+        >
+          <RequiredRule message="Debe indicar las cuotas pendientes" />
+          <RangeRule min={1} message="Al menos 1 cuota" />
         </SimpleItem>
 
-        <SimpleItem dataField="direccion" label={{ text: "Dirección" }} colSpan={2}>
-          <RequiredRule message="La dirección es obligatoria" />
+        <SimpleItem
+          dataField="fechaPago"
+          label={{ text: "Fecha de Pago" }}
+          editorType="dxDateBox"
+          editorOptions={{ displayFormat: "dd/MM/yyyy" }}
+        >
+          <RequiredRule message="Debe seleccionar la fecha de pago" />
+        </SimpleItem>
+
+        <SimpleItem
+          dataField="tipoString"
+          label={{ text: "Estado" }}
+          editorType="dxSelectBox"
+          editorOptions={{
+            items: estadoOptions,
+            placeholder: "Seleccione un estado",
+          }}
+        >
+          <RequiredRule message="Debe seleccionar un estado" />
+        </SimpleItem>
+
+        <SimpleItem
+          dataField="tipoPropiedad"
+          label={{ text: "Tipo de Propiedad" }}
+          editorType="dxTextBox"
+          colSpan={2}
+        >
+          <RequiredRule message="Debe describir el tipo de propiedad" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>
           <ButtonWrapper>
-          <StyledButton
-            theme={theme}
-            text="Registrar"
-            type="success"
-            onClick={handleButtonClick}
-          />
+            <StyledButton
+              theme={theme}
+              text="Registrar Préstamo Hipotecario"
+              type="success"
+              onClick={handleSubmit}
+            />
           </ButtonWrapper>
         </SimpleItem>
       </ResponsiveForm>
@@ -182,7 +236,4 @@ const PostClient = () => {
   );
 };
 
-export default PostClient;
-
-
-
+export default PostPrestamoHipotecario;

@@ -146,7 +146,7 @@ const PostTarjetaDebito = () => {
         showValidationSummary={true}
         formData={{
           numeroTarjeta: "",
-          fechaExpiracion: "",
+          fechaExpiracion: new Date(),
           cvv: "",
           saldoDisponible: 0,
           clienteId: 0,
@@ -164,10 +164,10 @@ const PostTarjetaDebito = () => {
           dataField="fechaExpiracion"
           label={{ text: "Fecha de Expiración" }}
           editorType="dxDateBox"
-          editorOptions={{ type: "date" }}
+          editorOptions={{ displayFormat: "dd/MM/yyyy" }}
         >
-          <RequiredRule message="Debe ingresar una fecha" />
-        </SimpleItem>
+          <RequiredRule message="Debe seleccionar la fecha de pago" />
+        </SimpleItem>       
 
         <SimpleItem dataField="cvv" label={{ text: "CVV" }}>
           <RequiredRule message="Este campo es obligatorio" />

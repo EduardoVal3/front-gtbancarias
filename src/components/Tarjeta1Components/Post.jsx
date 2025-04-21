@@ -124,7 +124,7 @@ const PostTarjetaCredito = () => {
           notify("Tarjeta de crédito creada exitosamente", "success", 4000);
           formInstance.option("formData", {
             numeroTarjeta: "",
-            fechaExpiracion: "",
+            fechaExpiracion: new Date(),
             cvv: "",
             limiteCredito: 0,
             saldoPendiente: 0,
@@ -148,7 +148,7 @@ const PostTarjetaCredito = () => {
         showValidationSummary={true}
         formData={{
           numeroTarjeta: "",
-          fechaExpiracion: "",
+          fechaExpiracion: new Date(),
           cvv: "",
           limiteCredito: 0,
           saldoPendiente: 0,
@@ -167,9 +167,9 @@ const PostTarjetaCredito = () => {
           dataField="fechaExpiracion"
           label={{ text: "Fecha de Expiración" }}
           editorType="dxDateBox"
-          editorOptions={{ type: "date" }}
+          editorOptions={{ displayFormat: "dd/MM/yyyy" }}
         >
-          <RequiredRule message="Debe ingresar una fecha" />
+          <RequiredRule message="Debe seleccionar la fecha de pago" />
         </SimpleItem>
 
         <SimpleItem dataField="cvv" label={{ text: "CVV" }}>

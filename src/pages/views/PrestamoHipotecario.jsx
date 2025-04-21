@@ -7,6 +7,7 @@ import GetPrestamosH from "../../components/PrestamoHComponents/Get";
 import PutPrestamoH from "../../components/PrestamoHComponents/Put";
 import DeletePrestamosH from "../../components/PrestamoHComponents/Delete";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
+import PostPrestamoHipotecario from "../../components/PrestamoHComponents/Post";
 
 export function PrestamoHipotecario() {
     const [location] = useLocation(); 
@@ -37,7 +38,7 @@ export function PrestamoHipotecario() {
             {/* Rutas para renderizar los componentes */}
             <div>
                 <Route path="/prestamos/hipotecarios/lista" component={GetPrestamosH} />
-                <Route path="/prestamos/hipotecarios/crear" component={PostTarjetaCredito} />
+                <Route path="/prestamos/hipotecarios/crear" component={PostPrestamoHipotecario} />
                 <Route path="/prestamos/hipotecarios/editar" component={PutPrestamoH} />
                 <Route path="/prestamos/hipotecarios/eliminar" component={DeletePrestamosH} />
             </div>

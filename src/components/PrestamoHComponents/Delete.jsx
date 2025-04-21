@@ -157,12 +157,13 @@ const DeletePrestamosH = () => {
         <Paging enabled={true} pageSize={10} />
         <Editing mode="row" allowDeleting={true} useIcons={true} />
 
-        <Column dataField="Id" caption="ID" width={50} />
+        <Column dataField="Id" caption="ID" width={50} allowEditing={false} />
         <Column dataField="MontoPrestamo" caption="Monto" />
         <Column dataField="TasaInteres" caption="Tasa de Interés" />
-        <Column dataField="TipoPropiedad" caption="Tipo de Propiedad" />
+        <Column dataField="TipoPropiedad" caption="Propiedad Hipotecada" />
         <Column dataField="FechaPago" caption="Fecha de Pago" />
-        <Column dataField="EstadoString" caption="Estado" />
+        <Column dataField="Estado" caption="Estado (0, 1, 2)" />
+        <Column dataField="TipoString" caption="Estado (Activo, Pagado, Vencido)" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>

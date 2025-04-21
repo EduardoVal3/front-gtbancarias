@@ -1,16 +1,15 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Form,
   SimpleItem,
   RequiredRule,
-  EmailRule,
-  PatternRule,
 } from "devextreme-react/form";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
-import { v } from "../styles/Variables";
-import { createCliente } from "../services/clienteService";
+import { v } from "../../styles/Variables";
 import notify from "devextreme/ui/notify";
+import { getCuentasBancarias } from "../../services/cuentaBancariaService";
+import { createRetiro } from "../../services/retiroService"; // Nuevo servicio para retiros
 
 const Container = styled.div`
   height: auto;
@@ -46,13 +45,12 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-field-item-label-text {
-    color: ${(props) => props.theme.text}; /* Aquí aplicamos el color del tema */
+    color: ${(props) => props.theme.text};
     font-weight: 500;
   }
 
   .dx-validation-summary {
     margin-top: 1rem;
-    color: ${({ theme }) => theme.red500};
   }
 
   @media (max-width: 768px) {
@@ -61,6 +59,7 @@ const ResponsiveForm = styled(Form)`
     }
   }
 `;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -90,11 +89,26 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const PostClient = () => {
+const PostRetiro = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
+  const [cuentas, setCuentas] = useState([]);
 
-  const handleButtonClick = async () => {
+  useEffect(() => {
+    const cargarCuentas = async () => {
+      try {
+        const data = await getCuentasBancarias();
+        setCuentas(data);
+      } catch (error) {
+        console.error("Error al cargar cuentas:", error);
+        notify("Error al cargar la lista de cuentas", "error", 4000);
+      }
+    };
+
+    cargarCuentas();
+  }, []);
+
+  const handleSubmit = async () => {
     const formInstance = formRef.current?.instance;
 
     if (formInstance) {
@@ -104,77 +118,80 @@ const PostClient = () => {
         const formData = formInstance.option("formData");
 
         try {
-          await createCliente(formData);
-          console.log("✅ Cliente creado:", formData);
-          notify("Cliente registrado exitosamente", "success", 3000);
-
-          // Reiniciar formulario
-          formInstance.option("formData", {
-            nombre: "",
-            apellido: "",
-            email: "",
-            telefono: "",
-            direccion: "",
-          });
+          await createRetiro(formData);
+          notify("Retiro realizado exitosamente", "success", 4000);
+          formInstance.resetValues();
         } catch (error) {
-          console.error("❌ Error al crear cliente:", error);
-          notify("Error al registrar cliente", "error", 3000);
+          console.error("❌ Error al realizar el retiro:", error);
+          notify("Error al registrar el retiro", "error", 4000);
         }
-      } else {
-        console.warn("Formulario inválido.");
       }
     }
   };
 
   return (
     <Container theme={theme}>
-      <Title theme={theme}>Registrar nuevo cliente</Title>
+      <Title theme={theme}>Registrar Retiro</Title>
       <ResponsiveForm
         ref={formRef}
         colCount={window.innerWidth > 768 ? 2 : 1}
         showColonAfterLabel={true}
         showValidationSummary={true}
         formData={{
-          nombre: "",
-          apellido: "",
-          email: "",
-          telefono: "",
-          direccion: "",
+          cuentaId: 0,
+          monto: 0,
+          descripcion: "",
+          hechoPor: "",
         }}
       >
-        <SimpleItem dataField="nombre" label={{ text: "Nombre" }}>
-          <RequiredRule message="El nombre es obligatorio" />
+        <SimpleItem
+          dataField="cuentaId"
+          label={{ text: "Cuenta Origen" }}
+          editorType="dxSelectBox"
+          editorOptions={{
+            items: cuentas,
+            valueExpr: "Id",
+            displayExpr: (item) =>
+              item
+                ? `${item.Id} - ${item.NumeroCuenta} - $${item.Saldo}`
+                : "",
+            placeholder: "Seleccione una cuenta",
+            searchEnabled: true,
+          }}
+        >
+          <RequiredRule message="Debe seleccionar una cuenta" />
         </SimpleItem>
 
-        <SimpleItem dataField="apellido" label={{ text: "Apellido" }}>
-          <RequiredRule message="El apellido es obligatorio" />
+        <SimpleItem
+          dataField="monto"
+          label={{ text: "Monto" }}
+          editorType="dxNumberBox"
+        >
+          <RequiredRule message="Debe ingresar un monto" />
         </SimpleItem>
 
-        <SimpleItem dataField="email" label={{ text: "Correo" }}>
-          <RequiredRule message="El correo es obligatorio" />
-          <EmailRule message="Correo electrónico no válido" />
+        <SimpleItem
+          dataField="hechoPor"
+          label={{ text: "Hecho por" }}
+        >
+          <RequiredRule message="Debe indicar quién realiza el retiro" />
         </SimpleItem>
 
-        <SimpleItem dataField="telefono" label={{ text: "Teléfono" }}>
-          <RequiredRule message="El teléfono es obligatorio" />
-          <PatternRule
-            pattern={/^\d{7,15}$/}
-            message="Número inválido (7-15 dígitos)"
-          />
-        </SimpleItem>
-
-        <SimpleItem dataField="direccion" label={{ text: "Dirección" }} colSpan={2}>
-          <RequiredRule message="La dirección es obligatoria" />
+        <SimpleItem
+          dataField="descripcion"
+          label={{ text: "Descripción" }}
+        >
+          <RequiredRule message="Debe ingresar una descripción" />
         </SimpleItem>
 
         <SimpleItem colSpan={2}>
           <ButtonWrapper>
-          <StyledButton
-            theme={theme}
-            text="Registrar"
-            type="success"
-            onClick={handleButtonClick}
-          />
+            <StyledButton
+              theme={theme}
+              text="Registrar Retiro"
+              type="success"
+              onClick={handleSubmit}
+            />
           </ButtonWrapper>
         </SimpleItem>
       </ResponsiveForm>
@@ -182,7 +199,8 @@ const PostClient = () => {
   );
 };
 
-export default PostClient;
+export default PostRetiro;
+
 
 
 

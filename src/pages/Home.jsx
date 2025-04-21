@@ -11,6 +11,10 @@ import { getTransferencias } from "../services/transferenciaService";
 import { getTarjetasCredito } from "../services/tarjetaCreditoService";
 import { getCuentasBancarias } from "../services/cuentaBancariaService";
 import { getPrestamosHipotecarios } from "../services/prestamoHipotecarioService";
+import { getPrestamosPersonales } from "../services/prestamoPersonalService";
+import { getTarjetasDebito } from "../services/tarjetaDebitoService";
+import { getDepositos } from "../services/depositoService";
+import { getRetiros } from "../services/retiroService";
 
 const Container = styled.div`
   height:auto;
@@ -113,22 +117,27 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [clientes, empleados, transacciones, tarjetas, cuentas, prestamos] = await Promise.all([
+      const [clientes, empleados, cuentas, tarjetaC, tarjetaD, transferencias, depositos,
+         retiros, prestamosH, prestamosP] = await Promise.all([
         getClientes(),
         getEmpleados(),
-        getTransferencias(),
-        getTarjetasCredito(),
         getCuentasBancarias(),
+        getTarjetasCredito(),
+        getTarjetasDebito(),
+        getTransferencias(),
+        getDepositos(),
+        getRetiros(),
         getPrestamosHipotecarios(),
+        getPrestamosPersonales(),
       ]);
 
       setDataCounts({
         clientes: clientes.length,
         empleados: empleados.length,
-        transacciones: transacciones.length,
-        tarjetas: tarjetas.length,
         cuentas: cuentas.length,
-        prestamos: prestamos.length,
+        tarjetas: tarjetaC.length+tarjetaD.length,
+        transacciones: transferencias.length+depositos.length+retiros.length,
+        prestamos: prestamosP.length+prestamosH.length,
       });
     };
 

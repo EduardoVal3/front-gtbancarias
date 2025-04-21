@@ -3,7 +3,6 @@ import {
   Form,
   SimpleItem,
   RequiredRule,
-  PatternRule
 } from "devextreme-react/form";
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
@@ -195,6 +194,7 @@ const PostTransferencia = () => {
         <SimpleItem
           dataField="descripcion"
           label={{ text: "Descripción" }}
+          colSpan={2}
         >
           <RequiredRule message="Debe ingresar una descripción" />
         </SimpleItem>

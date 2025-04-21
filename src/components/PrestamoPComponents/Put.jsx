@@ -170,6 +170,7 @@ const PutPrestamoP = () => {
         <Column dataField="Finalidad" caption="Finalidad" />
         <Column dataField="FechaPago" caption="Fecha de Pago" />
         <Column dataField="TipoString" caption="Estado" />
+        <Column dataField="Estado" caption="Estado" />
         <Column dataField="Cliente.Nombre" caption="Cliente" />
         <Column dataField="ClienteId" caption="Cliente Id" />
       </DataGrid>
