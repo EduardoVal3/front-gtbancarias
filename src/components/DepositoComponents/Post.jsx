@@ -215,7 +215,7 @@ const PostDeposito = () => {
       <PreviewPanel theme={theme}>
         <h3>Vista previa</h3>
         <p><span>Cuenta:</span> {formData.cuentaDetalle || "–"}</p>
-        <p><span>Monto depósitado:</span> {`$${formData.monto.toFixed(2)}`}</p>
+        <p><span>Monto a depositar:</span> {`$${formData.monto.toFixed(2)}`}</p>
         <p><span>Hecho por:</span> {formData.hechoPor || "–"}</p>
         <p><span>Descripción:</span> {formData.descripcion || "–"}</p>
       </PreviewPanel>
