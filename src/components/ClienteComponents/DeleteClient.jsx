@@ -127,6 +127,7 @@ const DeleteClient = () => {
   const handleRowRemoved = async (e) => {
     try {
       await deleteCliente(e.data.Id);
+      notify("Cliente eliminado exitosamente", "success", 3000)
     } catch (err) {
       console.error('Error eliminando cliente:', err);
       notify("Error eliminando cliente", "error", 4000);

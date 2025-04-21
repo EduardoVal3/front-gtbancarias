@@ -1,138 +1,137 @@
-import styled from"styled-components";
-import logo from "../assets/Banco.png"
+import styled from "styled-components";
+import logo from "../assets/Banco.png";
+import manualPDF from "../assets/manual-de-uso.pdf";
 import { v } from "../styles/Variables";
+import { AiOutlineLeft } from "react-icons/ai";
 import {
-    AiOutlineLeft,
-    AiOutlineSetting,
-  } from "react-icons/ai";
-import { FaCreditCard, FaExchangeAlt, FaHome, FaMoneyCheckAlt, FaUniversity, FaUsers, FaUserTie } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
+  FaCreditCard,
+  FaExchangeAlt,
+  FaFilePdf,
+  FaGithub,
+  FaHome,
+  FaMoneyCheckAlt,
+  FaUniversity,
+  FaUsers,
+  FaUserTie,
+} from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
 
-
 export function Sidebar({ sidebarOpen, setSidebarOpen }) {
-    const ModSidebaropen = () => {
-      setSidebarOpen(!sidebarOpen);
-    };
-    const { setTheme, theme } = useContext(ThemeContext);
-    const CambiarTheme = () => {
-      setTheme((theme) => (theme === "light" ? "dark" : "light"));
-    };
-  
-    return (
-      <Container isOpen={sidebarOpen} themeUse={theme}>
-        <button className="Sidebarbutton" onClick={ModSidebaropen}>
-          <AiOutlineLeft />
-        </button>
-        <div className="Logocontent">
-          <div className="imgcontent">
-            <img src={logo} width={50} height={50}/>
-          </div>
-          <h2>SGT Bancarias</h2>
+  const ModSidebaropen = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+  const { setTheme, theme } = useContext(ThemeContext);
+  const CambiarTheme = () => {
+    setTheme((theme) => (theme === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <Container isOpen={sidebarOpen} themeUse={theme}>
+      <button className="Sidebarbutton" onClick={ModSidebaropen}>
+        <AiOutlineLeft />
+      </button>
+
+      <div className="Logocontent">
+        <div className="imgcontent">
+          <img src={logo} width={50} height={50} />
         </div>
-        {linksArray.map(({ icon, label, to }) => (
-          <div className="LinkContainer" key={label}>
+        <h2>SGT Bancarias</h2>
+      </div>
+
+      {/* Primary Links */}
+      {linksArray.map(({ icon, label, to }) => (
+        <div className="LinkContainer" key={label}>
+          <NavLink
+            to={to}
+            className={({ isActive }) => `Links${isActive ? " active" : ""}`}
+          >
+            <div className="Linkicon">{icon}</div>
+            {sidebarOpen && <span>{label}</span>}
+          </NavLink>
+        </div>
+      ))}
+
+      <Divider />
+
+      {/* Secondary Links (external) */}
+      {secondarylinksArray.map(({ icon, label, to, external }) => (
+        <div className="LinkContainer" key={label}>
+          {external ? (
+            <a
+              href={to}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="Links"
+            >
+              <div className="Linkicon">{icon}</div>
+              {sidebarOpen && <span>{label}</span>}
+            </a>
+          ) : (
             <NavLink
               to={to}
-              className={({ isActive }) => `Links${isActive ? ` active` : ``}`}
+              className={({ isActive }) => `Links${isActive ? " active" : ""}`}
             >
               <div className="Linkicon">{icon}</div>
               {sidebarOpen && <span>{label}</span>}
             </NavLink>
-          </div>
-        ))}
-        <Divider />
-        {secondarylinksArray.map(({ icon, label, to }) => (
-          <div className="LinkContainer" key={label}>
-            <NavLink
-              to={to}
-              className={({ isActive }) => `Links${isActive ? ` active` : ``}`}
-            >
-              <div className="Linkicon">{icon}</div>
-              {sidebarOpen && <span>{label}</span>}
-            </NavLink>
-          </div>
-        ))}
-        <Divider />
-        <div className="Themecontent">
-          {sidebarOpen && <span className="titletheme">Cambiar tema</span>}
-          <div className="Togglecontent">
-            <div className="grid theme-container">
-              <div className="content">
-                <div className="demo">
-                  <label className="switch" istheme={theme}>
-                    <input
-                      istheme={theme}
-                      type="checkbox"
-                      className="theme-swither"
-                      onClick={CambiarTheme}
-                    ></input>
-                    <span istheme={theme} className="slider round"></span>
-                  </label>
-                </div>
+          )}
+        </div>
+      ))}
+
+      <Divider />
+
+      <div className="Themecontent">
+        {sidebarOpen && <span className="titletheme">Cambiar tema</span>}
+        <div className="Togglecontent">
+          <div className="grid theme-container">
+            <div className="content">
+              <div className="demo">
+                <label className="switch" istheme={theme}>
+                  <input
+                    istheme={theme}
+                    type="checkbox"
+                    className="theme-swither"
+                    onClick={CambiarTheme}
+                  />
+                  <span istheme={theme} className="slider round" />
+                </label>
               </div>
             </div>
           </div>
         </div>
-      </Container>
-    );
-  }
-  
-// region data links
+      </div>
+    </Container>
+  );
+}
+
+// links primarios
 const linksArray = [
-    {
-      label: "Home",
-      icon: <FaHome />,
-      to: "/",
-    },
-    {
-      label: "Clientes",
-      icon: <FaUsers />,
-      to: "/clientes",
-    },
-    {
-      label: "Empleados",
-      icon: <FaUserTie />,
-      to: "/empleados",
-    },
-    {
-      label: "Cuentas Bancarias",
-      icon: <FaUniversity />,
-      to: "/cuentas",
-    },
-    {
-      label: "Tarjetas",
-      icon: <FaCreditCard />,
-      to: "/tarjetas",
-    },
-    {
-      label: "Transacciones",
-      icon: <FaExchangeAlt />,
-      to: "/transacciones",
-    },
-    {
-      label: "Préstamos",
-      icon: <FaMoneyCheckAlt />,
-      to: "/prestamos",
-    },
-  ];
-  const secondarylinksArray = [
-    {
-      label: "Configuración",
-      icon: <AiOutlineSetting />,
-      to: "/null",
-    },
-    {
-      label: "Salir",
-      icon: <MdLogout />,
-      to: "/null",
-    },
+  { label: "Home", icon: <FaHome />, to: "/" },
+  { label: "Clientes", icon: <FaUsers />, to: "/clientes" },
+  { label: "Empleados", icon: <FaUserTie />, to: "/empleados" },
+  { label: "Cuentas Bancarias", icon: <FaUniversity />, to: "/cuentas" },
+  { label: "Tarjetas", icon: <FaCreditCard />, to: "/tarjetas" },
+  { label: "Transacciones", icon: <FaExchangeAlt />, to: "/transacciones" },
+  { label: "Préstamos", icon: <FaMoneyCheckAlt />, to: "/prestamos" },
 ];
 
-// fin
-
+// links secundarios
+const secondarylinksArray = [
+  {
+    label: "Repositorio",
+    icon: <FaGithub />,
+    to: "https://github.com/EduardoVal3/front-gtbancarias",
+    external: true,
+  },
+  {
+    label: "Manual de uso",
+    icon: <FaFilePdf />,
+    to: manualPDF,
+    external: true,
+  },
+];
 
 //#region STYLED COMPONENTS
 const Container = styled.div`

@@ -1,5 +1,3 @@
-// src/components/prestamos/PostPrestamoHipotecario.jsx
-
 import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Form,
