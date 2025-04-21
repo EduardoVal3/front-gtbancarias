@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Form,
   SimpleItem,
@@ -9,17 +9,54 @@ import {
 import styled, { ThemeContext } from "styled-components";
 import { Button } from "devextreme-react/button";
 import { v } from "../../styles/Variables";
-import { createCliente } from "../../services/clienteService";
 import notify from "devextreme/ui/notify";
+import { createCliente } from "../../services/clienteService";
 
 const Container = styled.div`
-  height: auto;
+  display: flex;
+  flex-direction: column;
   background-color: ${({ theme }) => theme.bgtotal};
   color: ${({ theme }) => theme.text};
   border-radius: ${v.borderRadius};
   padding: ${v.lgSpacing};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
+
+  @media (min-width: 769px) {
+    flex-direction: row;
+  }
+`;
+
+const FormWrapper = styled.div`
+  flex: 2;
+`;
+
+const PreviewPanel = styled.div`
+  background-color: ${({ theme }) => theme.bg2};
+  padding: ${v.mdSpacing};
+  border-radius: ${v.borderRadius};
+  margin-top: ${v.lgSpacing};
+
+  @media (min-width: 769px) {
+    margin-top: 0;
+    margin-left: ${v.lgSpacing};
+    flex: 1;
+    max-width: 300px;
+  }
+
+  h3 {
+    margin-top: 0;
+    color: ${({ theme }) => theme.textprimary};
+    font-size: ${({ theme }) => theme.fontlg};
+  }
+  p {
+    margin: 0.5rem 0;
+    font-size: ${({ theme }) => theme.fontmd};
+  }
+  span {
+    font-weight: bold;
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
 const Title = styled.h2`
@@ -36,7 +73,7 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-texteditor-input {
-    padding: 0.40rem;
+    padding: 0.4rem;
     border: 1px solid ${({ theme }) => theme.gray500};
     transition: border-color 0.3s ease;
 
@@ -46,7 +83,7 @@ const ResponsiveForm = styled(Form)`
   }
 
   .dx-field-item-label-text {
-    color: ${(props) => props.theme.text}; /* Aquí aplicamos el color del tema */
+    color: ${({ theme }) => theme.text};
     font-weight: 500;
   }
 
@@ -54,13 +91,8 @@ const ResponsiveForm = styled(Form)`
     margin-top: 1rem;
     color: ${({ theme }) => theme.red500};
   }
-
-  @media (max-width: 768px) {
-    .dx-form-item-label {
-      font-size: ${({ theme }) => theme.fontsm};
-    }
-  }
 `;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -94,95 +126,126 @@ const PostClient = () => {
   const theme = useContext(ThemeContext);
   const formRef = useRef(null);
 
-  const handleButtonClick = async () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    direccion: "",
+  });
+
+  // Detectar cambios en el tamaño de pantalla
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Actualizar estado local al cambiar cualquier campo
+  const handleFieldDataChanged = ({ dataField, value }) => {
+    setFormData(prev => ({ ...prev, [dataField]: value }));
+  };
+
+  const handleSubmit = async () => {
     const formInstance = formRef.current?.instance;
+    if (!formInstance) return;
 
-    if (formInstance) {
-      const result = formInstance.validate();
+    const result = formInstance.validate();
+    if (!result.isValid) return;
 
-      if (result.isValid) {
-        const formData = formInstance.option("formData");
-
-        try {
-          await createCliente(formData);
-          console.log("✅ Cliente creado:", formData);
-          notify("Cliente registrado exitosamente", "success", 3000);
-
-          // Reiniciar formulario
-          formInstance.option("formData", {
-            nombre: "",
-            apellido: "",
-            email: "",
-            telefono: "",
-            direccion: "",
-          });
-        } catch (error) {
-          console.error("❌ Error al crear cliente:", error);
-          notify("Error al registrar cliente", "error", 3000);
-        }
-      } else {
-        console.warn("Formulario inválido.");
-      }
+    try {
+      await createCliente(formData);
+      notify("Cliente registrado exitosamente", "success", 4000);
+      formInstance.resetValues();
+      setFormData({
+        nombre: "",
+        apellido: "",
+        email: "",
+        telefono: "",
+        direccion: "",
+      });
+    } catch (error) {
+      console.error("❌ Error al crear cliente:", error);
+      notify("Error al registrar cliente", "error", 4000);
     }
   };
 
   return (
     <Container theme={theme}>
-      <Title theme={theme}>Registrar nuevo cliente</Title>
-      <ResponsiveForm
-        ref={formRef}
-        colCount={window.innerWidth > 768 ? 2 : 1}
-        showColonAfterLabel={true}
-        showValidationSummary={true}
-        formData={{
-          nombre: "",
-          apellido: "",
-          email: "",
-          telefono: "",
-          direccion: "",
-        }}
-      >
-        <SimpleItem dataField="nombre" label={{ text: "Nombre" }}>
-          <RequiredRule message="El nombre es obligatorio" />
-        </SimpleItem>
+      <FormWrapper>
+        <Title theme={theme}>Registrar nuevo cliente</Title>
+        <ResponsiveForm
+          ref={formRef}
+          formData={formData}
+          onFieldDataChanged={handleFieldDataChanged}
+          colCount={isMobile ? 1 : 2}
+          labelLocation={isMobile ? "top" : "left"}
+          showColonAfterLabel={!isMobile}
+          showValidationSummary={true}
+        >
+          <SimpleItem dataField="nombre" label={{ text: "Nombres" }}>
+            <RequiredRule message="El nombre es obligatorio" />
+          </SimpleItem>
 
-        <SimpleItem dataField="apellido" label={{ text: "Apellido" }}>
-          <RequiredRule message="El apellido es obligatorio" />
-        </SimpleItem>
+          <SimpleItem dataField="apellido" label={{ text: "Apellidos" }}>
+            <RequiredRule message="El apellido es obligatorio" />
+          </SimpleItem>
 
-        <SimpleItem dataField="email" label={{ text: "Correo" }}>
-          <RequiredRule message="El correo es obligatorio" />
-          <EmailRule message="Correo electrónico no válido" />
-        </SimpleItem>
+          <SimpleItem dataField="email" label={{ text: "Correo" }}>
+            <RequiredRule message="El correo es obligatorio" />
+            <EmailRule message="Correo electrónico no válido" />
+          </SimpleItem>
 
-        <SimpleItem dataField="telefono" label={{ text: "Teléfono" }}>
-          <RequiredRule message="El teléfono es obligatorio" />
-          <PatternRule
-            pattern={/^\d{7,15}$/}
-            message="Número inválido (7-15 dígitos)"
-          />
-        </SimpleItem>
+          <SimpleItem dataField="telefono" label={{ text: "Teléfono" }}>
+            <RequiredRule message="El teléfono es obligatorio" />
+            <PatternRule
+              pattern={/^\d{7,15}$/}
+              message="Número inválido (7–15 dígitos)"
+            />
+          </SimpleItem>
 
-        <SimpleItem dataField="direccion" label={{ text: "Dirección" }} colSpan={2}>
-          <RequiredRule message="La dirección es obligatoria" />
-        </SimpleItem>
+          <SimpleItem
+            dataField="direccion"
+            label={{ text: "Dirección" }}
+            colSpan={2}
+          >
+            <RequiredRule message="La dirección es obligatoria" />
+          </SimpleItem>
 
-        <SimpleItem colSpan={2}>
-          <ButtonWrapper>
-          <StyledButton
-            theme={theme}
-            text="Registrar"
-            type="success"
-            onClick={handleButtonClick}
-          />
-          </ButtonWrapper>
-        </SimpleItem>
-      </ResponsiveForm>
+          <SimpleItem colSpan={2}>
+            <ButtonWrapper>
+              <StyledButton
+                theme={theme}
+                text="Registrar Cliente"
+                type="success"
+                onClick={handleSubmit}
+              />
+            </ButtonWrapper>
+          </SimpleItem>
+        </ResponsiveForm>
+      </FormWrapper>
+
+      <PreviewPanel theme={theme}>
+        <h3>Vista previa</h3>
+        <p>
+          <span>Nombres:</span> {formData.nombre || "—"}
+        </p>
+        <p>
+          <span>Apellidos:</span> {formData.apellido || "—"}
+        </p>
+        <p>
+          <span>Correo:</span> {formData.email || "—"}
+        </p>
+        <p>
+          <span>Teléfono:</span> {formData.telefono || "—"}
+        </p>
+        <p>
+          <span>Dirección:</span> {formData.direccion || "—"}
+        </p>
+      </PreviewPanel>
     </Container>
   );
 };
 
 export default PostClient;
-
-
-
