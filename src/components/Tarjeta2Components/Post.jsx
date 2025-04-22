@@ -279,7 +279,7 @@ const PostTarjetaDebito = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa de la tarjeta</h3>
         <p>
           <span>Nº Tarjeta:</span>{" "}
           {formData.numeroTarjeta

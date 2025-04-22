@@ -213,7 +213,7 @@ const PostRetiro = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa del retiro</h3>
         <p><span>Cuenta:</span> {formData.cuentaDetalle || "–"}</p>
         <p><span>Monto a retirar:</span> {`$${formData.monto.toFixed(2)}`}</p>
         <p><span>Hecho por:</span> {formData.hechoPor || "–"}</p>

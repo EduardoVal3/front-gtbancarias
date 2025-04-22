@@ -323,7 +323,7 @@ const PostPrestamoPersonal = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa del préstamo</h3>
         <p>
           <strong>Cliente:</strong>{" "}
           {clienteSel

@@ -167,7 +167,7 @@ const PostClient = () => {
       });
     } catch (error) {
       console.error("❌ Error al crear cliente:", error);
-      notify("Error al registrar cliente", "error", 4000);
+      notify("Error al registrar cliente. Verifique que el email no esté en uso", "error", 4000);
     }
   };
 
@@ -227,7 +227,7 @@ const PostClient = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa del cliente</h3>
         <p>
           <span>Nombres:</span> {formData.nombre || "—"}
         </p>

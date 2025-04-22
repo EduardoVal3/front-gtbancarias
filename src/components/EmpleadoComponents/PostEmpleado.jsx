@@ -162,7 +162,7 @@ const PostEmpleado = () => {
       });
     } catch (error) {
       console.error("❌ Error al registrar empleado:", error);
-      notify("Error al registrar empleado. Verifique los datos", "error", 4000);
+      notify("Error al registrar empleado. Verifique que el email no esté en uso", "error", 4000);
     }
   };
 

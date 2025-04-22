@@ -269,7 +269,7 @@ const PostCuenta = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa de la cuenta</h3>
         <p>
           <span>N° Cuenta:</span> {formData.numeroCuenta || "–"}
         </p>

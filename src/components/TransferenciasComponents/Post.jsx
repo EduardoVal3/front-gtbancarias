@@ -263,7 +263,7 @@ const PostTransferencia = () => {
       </FormWrapper>
 
       <PreviewPanel theme={theme}>
-        <h3>Vista previa</h3>
+        <h3>Vista previa de la transferencia</h3>
         <p><span>Cuenta origen:</span> {formData.origenDetalle || "–"}</p>
         <p><span>Cuenta destino:</span> {formData.destinoDetalle || "–"}</p>
         <p><span>Monto:</span> {`$${formData.monto.toFixed(2)}`}</p>

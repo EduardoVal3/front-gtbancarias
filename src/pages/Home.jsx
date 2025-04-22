@@ -1,9 +1,20 @@
+// src/pages/Home.jsx
+
 import React, { useContext, useEffect, useState } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FaUsers, FaUserTie, FaExchangeAlt, FaCreditCard, FaUniversity, FaMoneyCheckAlt } from "react-icons/fa";
+import {
+  FaUsers,
+  FaUserTie,
+  FaExchangeAlt,
+  FaCreditCard,
+  FaUniversity,
+  FaMoneyCheckAlt,
+} from "react-icons/fa";
 import { v } from "../styles/Variables";
-import { motion } from "framer-motion";
+
+import DashboardGrid from "../components/HomeComponents/DashboardGrid";
+import StatsChart from "../components/HomeComponents/StatsChart";
 
 import { getClientes } from "../services/clienteService";
 import { getEmpleados } from "../services/empleadoService";
@@ -15,98 +26,57 @@ import { getPrestamosPersonales } from "../services/prestamoPersonalService";
 import { getTarjetasDebito } from "../services/tarjetaDebitoService";
 import { getDepositos } from "../services/depositoService";
 import { getRetiros } from "../services/retiroService";
+import LoansChart from "../components/HomeComponents/PrestamosChart";
 
 const Container = styled.div`
-  height:auto;
-  background-color: ${(props)=>props.theme.bgtotal};
-  color: ${(props)=>props.theme.text};
-
   padding: ${v.lgSpacing};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: ${({ theme }) => theme.bgtotal};
+  color: ${({ theme }) => theme.text};
+  min-height: 100vh;
 `;
 
 const Hero = styled.div`
   text-align: center;
-  margin-bottom: 1rem;
-  max-width: auto;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontxxl};
   color: ${({ theme }) => theme.textprimary};
-  margin-bottom: 0rem;
-  
-  @media (max-width: 768px) {
-    font-size: 2.8rem;
-    line-height: 1.4;
-  }
+  margin-bottom: 0.5rem;
 `;
 
 const Subtitle = styled.p`
   font-size: ${({ theme }) => theme.fontlg};
   color: ${({ theme }) => theme.text};
-  margin-bottom: 0.50rem;
   line-height: 1.6;
 `;
 
-const CardGrid = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  width: 100%;
-  max-width: auto;
-`;
-
-const NavCard = styled(motion.div)`
-  background-color: ${({ theme }) => theme.bg3};
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  cursor: pointer;
+/** Nuevo wrapper de dos columnas */
+const DashboardWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 2rem;
 
-  &:hover {
-    transform: translateY(-6px);
-    background-color: ${({ theme }) => theme.bg4};
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
-const IconWrapper = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: ${({ theme }) => theme.primary};
+/** Contenedor de las cards (columna izquierda) */
+const CardsWrapper = styled.div`
+  flex: 1;
 `;
 
-const CardTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontlg};
-  color: ${({ theme }) => theme.text};
-  margin-bottom: 0.3rem;
-`;
-
-const CardDesc = styled.p`
-  font-size: ${({ theme }) => theme.fontsm};
-  color: ${({ theme }) => theme.text};
-  text-align: center;
-  margin-bottom: 0.5rem;
-`;
-
-const Counter = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.primary};
+/** Contenedor del chart (columna derecha) */
+const ChartWrapper = styled.div`
+  flex: 1;
 `;
 
 const Home = () => {
   const theme = useContext(ThemeContext);
   const navigate = useNavigate();
 
-  const [dataCounts, setDataCounts] = useState({
+  const [counts, setCounts] = useState({
     clientes: 0,
     empleados: 0,
     transacciones: 0,
@@ -115,10 +85,21 @@ const Home = () => {
     prestamos: 0,
   });
 
+  // Carga de datos
   useEffect(() => {
-    const fetchData = async () => {
-      const [clientes, empleados, cuentas, tarjetaC, tarjetaD, transferencias, depositos,
-         retiros, prestamosH, prestamosP] = await Promise.all([
+    (async () => {
+      const [
+        clientes,
+        empleados,
+        cuentas,
+        tarjC,
+        tarjD,
+        trans,
+        deps,
+        retiros,
+        ph,
+        pp,
+      ] = await Promise.all([
         getClientes(),
         getEmpleados(),
         getCuentasBancarias(),
@@ -131,78 +112,85 @@ const Home = () => {
         getPrestamosPersonales(),
       ]);
 
-      setDataCounts({
+      setCounts({
         clientes: clientes.length,
         empleados: empleados.length,
         cuentas: cuentas.length,
-        tarjetas: tarjetaC.length+tarjetaD.length,
-        transacciones: transferencias.length+depositos.length+retiros.length,
-        prestamos: prestamosP.length+prestamosH.length,
+        tarjetas: tarjC.length + tarjD.length,
+        transacciones: trans.length + deps.length + retiros.length,
+        prestamos: ph.length + pp.length,
       });
-    };
-
-    fetchData();
+    })();
   }, []);
 
-  const cardVariants = {
-    initial: { opacity: 0, y: 50 },
-    animate: { opacity: 1, y: 0 },
-  };
-
-  const transition = { duration: 0.6, type: "spring", bounce: 0.3 };
+  // Datos para DashboardGrid
+  const cards = [
+    {
+      title: "Clientes",
+      description: "Gestión completa de los clientes.",
+      icon: <FaUsers />,
+      count: counts.clientes,
+      route: "/clientes",
+    },
+    {
+      title: "Empleados",
+      description: "Registro y administración de empleados.",
+      icon: <FaUserTie />,
+      count: counts.empleados,
+      route: "/empleados",
+    },
+    {
+      title: "Transacciones",
+      description: "Retiros, depósitos y transferencias.",
+      icon: <FaExchangeAlt />,
+      count: counts.transacciones,
+      route: "/transacciones",
+    },
+    {
+      title: "Tarjetas",
+      description: "Crédito y débito para clientes.",
+      icon: <FaCreditCard />,
+      count: counts.tarjetas,
+      route: "/tarjetas",
+    },
+    {
+      title: "Cuentas Bancarias",
+      description: "Apertura y seguimiento de cuentas.",
+      icon: <FaUniversity />,
+      count: counts.cuentas,
+      route: "/cuentas",
+    },
+    {
+      title: "Préstamos",
+      description: "Personales e hipotecarios.",
+      icon: <FaMoneyCheckAlt />,
+      count: counts.prestamos,
+      route: "/prestamos",
+    },
+  ];
 
   return (
     <Container theme={theme}>
       <Hero>
         <Title theme={theme}>Sistema de Gestión Bancaria</Title>
         <Subtitle theme={theme}>
-          Administra todas las operaciones del banco desde un solo lugar. Clientes, empleados, transacciones, tarjetas, cuentas y préstamos, todo en una interfaz moderna.
+          Administra todas las operaciones del banco desde un solo lugar. 
+          Clientes, empleados, transacciones, tarjetas, cuentas y préstamos, todo en una interfaz moderna.
         </Subtitle>
       </Hero>
 
-      <CardGrid>
-        <NavCard theme={theme} onClick={() => navigate("/clientes")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaUsers /></IconWrapper>
-          <CardTitle theme={theme}>Clientes</CardTitle>
-          <CardDesc theme={theme}>Gestión completa de los clientes.</CardDesc>
-          <Counter theme={theme}>{dataCounts.clientes}</Counter>
-        </NavCard>
+      <DashboardWrapper>
+        {/* Izquierda: Cards */}
+        <CardsWrapper>
+          <DashboardGrid cards={cards} navigate={navigate} />
+        </CardsWrapper>
 
-        <NavCard theme={theme} onClick={() => navigate("/empleados")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaUserTie /></IconWrapper>
-          <CardTitle theme={theme}>Empleados</CardTitle>
-          <CardDesc theme={theme}>Registro y administración de empleados.</CardDesc>
-          <Counter theme={theme}>{dataCounts.empleados}</Counter>
-        </NavCard>
-
-        <NavCard theme={theme} onClick={() => navigate("/transacciones")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaExchangeAlt /></IconWrapper>
-          <CardTitle theme={theme}>Transacciones</CardTitle>
-          <CardDesc theme={theme}>Retiros, depósitos y transferencias.</CardDesc>
-          <Counter theme={theme}>{dataCounts.transacciones}</Counter>
-        </NavCard>
-
-        <NavCard theme={theme} onClick={() => navigate("/tarjetas")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaCreditCard /></IconWrapper>
-          <CardTitle theme={theme}>Tarjetas</CardTitle>
-          <CardDesc theme={theme}>Crédito y débito para clientes.</CardDesc>
-          <Counter theme={theme}>{dataCounts.tarjetas}</Counter>
-        </NavCard>
-
-        <NavCard theme={theme} onClick={() => navigate("/cuentas")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaUniversity /></IconWrapper>
-          <CardTitle theme={theme}>Cuentas Bancarias</CardTitle>
-          <CardDesc theme={theme}>Apertura y seguimiento de cuentas.</CardDesc>
-          <Counter theme={theme}>{dataCounts.cuentas}</Counter>
-        </NavCard>
-
-        <NavCard theme={theme} onClick={() => navigate("/prestamos")} variants={cardVariants} initial="initial" animate="animate" transition={transition}>
-          <IconWrapper theme={theme}><FaMoneyCheckAlt /></IconWrapper>
-          <CardTitle theme={theme}>Préstamos</CardTitle>
-          <CardDesc theme={theme}>Personales e hipotecarios.</CardDesc>
-          <Counter theme={theme}>{dataCounts.prestamos}</Counter>
-        </NavCard>
-      </CardGrid>
+        {/* Derecha: Chart */}
+        <ChartWrapper>
+          <StatsChart />
+          <LoansChart />
+        </ChartWrapper>
+      </DashboardWrapper>
     </Container>
   );
 };
