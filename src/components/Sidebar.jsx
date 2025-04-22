@@ -126,7 +126,7 @@ const secondarylinksArray = [
     external: true,
   },
   {
-    label: "Manual de uso",
+    label: "Manual de usuario",
     icon: <FaFilePdf />,
     to: manualPDF,
     external: true,
