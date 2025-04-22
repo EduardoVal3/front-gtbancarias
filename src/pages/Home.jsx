@@ -1,5 +1,3 @@
-// src/pages/Home.jsx
-
 import React, { useContext, useEffect, useState } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { useNavigate } from "react-router-dom";
