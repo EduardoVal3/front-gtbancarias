@@ -37,7 +37,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <div className="imgcontent">
           <img src={logo} width={50} height={50} />
         </div>
-        <h2>SGT Bancarias</h2>
+        <h2>SG Bancaria</h2>
       </div>
 
       {/* Primary Links */}

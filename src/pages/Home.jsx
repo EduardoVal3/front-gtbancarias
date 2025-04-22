@@ -181,12 +181,12 @@ const Home = () => {
       </Hero>
 
       <DashboardWrapper>
-        {/* Izquierda: Cards */}
+        {/* Izquierda: cards */}
         <CardsWrapper>
           <DashboardGrid cards={cards} navigate={navigate} />
         </CardsWrapper>
 
-        {/* Derecha: Chart */}
+        {/* Derecha: chart */}
         <ChartWrapper>
           <StatsChart />
           <LoansChart />
