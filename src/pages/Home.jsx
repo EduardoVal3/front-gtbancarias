@@ -44,6 +44,9 @@ const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontxxl};
   color: ${({ theme }) => theme.textprimary};
   margin-bottom: 0.5rem;
+  @media (max-width: 768px) {
+    line-height:1.2;
+  }
 `;
 
 const Subtitle = styled.p`
