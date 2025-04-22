@@ -83,7 +83,7 @@ export default function StatsChart() {
         />
         <Tooltip enabled={true} format="fixedPoint" />
         <Export enabled={true} />
-        <Title text="Distribución de Transacciones por Tipo" />
+        <Title text="Distribución de Transacciones por Tipo"/>
       </PieChart>
     </ChartWrapper>
   );
