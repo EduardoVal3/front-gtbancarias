@@ -189,7 +189,7 @@ const PostTarjetaDebito = () => {
   return (
     <Container theme={theme}>
       <FormWrapper>
-        <Title theme={theme}>Registrar tarjeta de crédito</Title>
+        <Title theme={theme}>Registrar tarjeta de débito</Title>
         <ResponsiveForm
           ref={formRef}
           formData={formData}
